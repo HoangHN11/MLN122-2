@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 const NAV_LINKS = [
   { href: '#hero', label: 'Home' },
   { href: '#ton-tai', label: 'Học Thuyết' },
-  { href: '#loto', label: 'Lô Tô' },
+  { href: '#quiz', label: 'Lô Tô' },
   { href: '#quiz', label: 'Khảo Nghiệm' },
   { href: '#chat', label: 'AI Chatbot' },
   { href: '#ai', label: 'AI Usage' },
