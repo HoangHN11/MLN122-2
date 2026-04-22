@@ -84,11 +84,12 @@ const QUESTION_MAP = {
     correctIndex: 1,
   },
   7: {
-    type: "fill",
+    type: "mcq",
     title: "Câu 7",
     question:
-      'Điền khuyết: Kinh tế thị trường định hướng xã hội chủ nghĩa ở Việt Nam hướng tới mục tiêu "dân giàu, ________, dân chủ, công bằng, văn minh".',
-    correctText: "nước mạnh",
+      "Kinh tế thị trường định hướng xã hội chủ nghĩa ở Việt Nam hướng tới mục tiêu \"dân giàu, nước mạnh, dân chủ, công bằng, văn minh\".",
+    options: ["Đúng", "Sai"],
+    correctIndex: 0,
   },
   8: {
     type: "mcq",
@@ -123,7 +124,7 @@ const COLOR_LAYOUTS = {
   blue: [1, 5, 7, 3, 9, 2, 6, 8, 4],
   pink: [2, 8, 4, 1, 6, 9, 7, 3, 5],
   yellow: [9, 3, 6, 4, 1, 8, 2, 5, 7],
-  green: [5, 2, 8, 7, 4, 1, 9, 6, 3],
+  red: [5, 2, 8, 7, 4, 1, 9, 6, 3],
 };
 
 const COLOR_OPTIONS = [
@@ -149,11 +150,11 @@ const COLOR_OPTIONS = [
     soft: "rgba(243, 213, 77, 0.35)",
   },
   {
-    id: "green",
-    name: "Xanh lá",
-    color: "#79d84f",
-    strong: "#57b536",
-    soft: "rgba(121, 216, 79, 0.35)",
+    id: "red",
+    name: "Màu đỏ",
+    color: "#e53935",
+    strong: "#b71c1c",
+    soft: "rgba(229, 57, 53, 0.35)",
   },
 ];
 
@@ -173,7 +174,6 @@ function findWinningLine(correctNumbers) {
 
 export default function LotoShow() {
   const [selectedColorId, setSelectedColorId] = useState(null);
-  const [drawnNumber, setDrawnNumber] = useState(null);
   const [openedCell, setOpenedCell] = useState(null);
   const [openedNumber, setOpenedNumber] = useState(null);
   const [correctCells, setCorrectCells] = useState([]);
@@ -194,21 +194,6 @@ export default function LotoShow() {
     return COLOR_LAYOUTS[selectedColorId] || [1, 2, 3, 4, 5, 6, 7, 8, 9];
   }, [selectedColorId]);
 
-  const valueToCellIndex = useMemo(() => {
-    const map = new Map();
-    boardLayout.forEach((value, idx) => {
-      map.set(value, idx + 1);
-    });
-    return map;
-  }, [boardLayout]);
-
-  const availableNumbers = useMemo(() => {
-    return boardLayout.filter((value) => {
-      const cellIndex = valueToCellIndex.get(value);
-      return !usedCells.has(cellIndex);
-    });
-  }, [boardLayout, usedCells, valueToCellIndex]);
-
   const selectedColor = useMemo(
     () => COLOR_OPTIONS.find((option) => option.id === selectedColorId) || null,
     [selectedColorId],
@@ -225,29 +210,8 @@ export default function LotoShow() {
 
   const currentQuestion = openedNumber ? QUESTION_MAP[openedNumber] : null;
 
-  const spinNumber = () => {
-    if (
-      isGameOver ||
-      feedback ||
-      openedCell ||
-      drawnNumber !== null ||
-      availableNumbers.length === 0
-    )
-      return;
-    const randomIdx = Math.floor(Math.random() * availableNumbers.length);
-    const nextNumber = availableNumbers[randomIdx];
-    setDrawnNumber(nextNumber);
-    setSelectedOption(null);
-    setTextAnswer("");
-  };
-
   const openQuestion = (number, cellIndex) => {
-    if (
-      isGameOver ||
-      feedback ||
-      number !== drawnNumber ||
-      usedCells.has(cellIndex)
-    )
+    if (isGameOver || feedback || usedCells.has(cellIndex) || openedCell !== null)
       return;
 
     setOpenedCell(cellIndex);
@@ -275,10 +239,7 @@ export default function LotoShow() {
     setWinningLine(line);
     setFeedback({
       isCorrect,
-      answerText:
-        question.type === "fill"
-          ? "nước mạnh"
-          : `${LABELS[question.correctIndex]}. ${question.options[question.correctIndex]}`,
+      answerText: `${LABELS[question.correctIndex]}. ${question.options[question.correctIndex]}`,
     });
 
     if (line || allDone) {
@@ -303,7 +264,6 @@ export default function LotoShow() {
 
   const nextRound = () => {
     setFeedback(null);
-    setDrawnNumber(null);
     setOpenedCell(null);
     setOpenedNumber(null);
     setSelectedOption(null);
@@ -311,7 +271,6 @@ export default function LotoShow() {
   };
 
   const resetBoard = () => {
-    setDrawnNumber(null);
     setOpenedCell(null);
     setOpenedNumber(null);
     setCorrectCells([]);
@@ -392,7 +351,6 @@ export default function LotoShow() {
                   const cellIndex = idx + 1;
                   const isWrong = wrongCells.includes(cellIndex);
                   const isCorrect = correctCells.includes(cellIndex);
-                  const isCurrentDraw = drawnNumber === value;
                   const isActive = openedCell === cellIndex;
                   const inWinningLine = winningLine
                     ? winningLine.includes(cellIndex)
@@ -401,8 +359,6 @@ export default function LotoShow() {
                   let className = "loto-cell";
                   if (isWrong) className += " wrong";
                   if (isCorrect) className += " correct";
-                  if (isCurrentDraw && !isWrong && !isCorrect)
-                    className += " drawn";
                   if (isActive) className += " active";
                   if (inWinningLine) className += " winner";
 
@@ -415,7 +371,7 @@ export default function LotoShow() {
                         isWrong ||
                         isCorrect ||
                         isGameOver ||
-                        drawnNumber !== value ||
+                        openedCell !== null ||
                         feedback !== null
                       }
                     >
@@ -426,39 +382,23 @@ export default function LotoShow() {
               </div>
 
               <div className="loto-controls">
-                <button
-                  className="loto-btn spin"
-                  onClick={spinNumber}
-                  disabled={
-                    isGameOver ||
-                    drawnNumber !== null ||
-                    openedCell !== null ||
-                    feedback !== null ||
-                    availableNumbers.length === 0
-                  }
-                >
-                  Quay Lô Tô
-                </button>
-                <button className="loto-btn reset" onClick={restart}>
+                {/* <button className="loto-btn reset" onClick={restart}>
                   Chơi lại
-                </button>
+                </button> */}
                 <button className="loto-btn reset" onClick={handleChangeColor}>
                   Đổi màu
                 </button>
               </div>
 
-              <p className="loto-drawn-number">
-                Số quay ra: <strong>{drawnNumber ?? "--"}</strong>
-              </p>
               <p className="loto-hint">
-                Bấm vào ô vừa quay để trả lời câu hỏi.
+                Bấm vào số bất kỳ để trả lời câu hỏi.
               </p>
             </div>
 
             <div className="loto-qa-panel">
               {!openedCell && !feedback && !isGameOver && (
                 <div className="loto-empty">
-                  <p>Hãy bấm Quay Lô Tô để bắt đầu.</p>
+                  <p>Bấm vào một số để bắt đầu câu hỏi!</p>
                 </div>
               )}
 
@@ -518,7 +458,7 @@ export default function LotoShow() {
                   </p>
                   {!isGameOver && (
                     <button className="loto-btn next" onClick={nextRound}>
-                      Quay tiếp
+                      Tiếp theo
                     </button>
                   )}
                 </div>
