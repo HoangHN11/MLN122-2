@@ -22,7 +22,7 @@ export default function Hero() {
         <div className="hero-v2-chapter-badge">CHƯƠNG 5</div>
 
         {/* Subtitle line */}
-        <p className="hero-v2-chapter-sub">Kinh tế chính trị Mác - Lênin</p>
+        <p className="hero-v2-chapter-sub">Kinh tế chính trị</p>
 
         {/* Main title */}
         <h1 className="hero-v2-title">
