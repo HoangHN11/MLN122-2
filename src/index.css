@@ -472,12 +472,12 @@ h1, h2, h3 {
   background: #ffffff;
   color: #1a1a1a;
   border: none;
-  font-family: 'Outfit', sans-serif;
+  font-family: "Arial", sans-serif;
   font-size: 1rem; /* increased from 0.9rem */
-  font-weight: 600;
+  font-weight: 500;
   text-decoration: none;
   transition: all 0.35s cubic-bezier(0.32, 0.72, 0, 1);
-  letter-spacing: 0.02em;
+  letter-spacing: 0.2px;
   transform: translateX(3px); /* Shift right 3px */
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
@@ -956,37 +956,43 @@ h1, h2, h3 {
 .option-card {
   display: flex;
   align-items: center;
-  gap: 1.2rem;
-  padding: 1.2rem 1.5rem;
-  background: #fff;
+  gap: 1.4rem;
+  padding: 1.25rem 1.75rem;
+  background: #ffffff;
   border: 1px solid var(--card-border);
-  border-radius: 12px;
+  border-radius: 16px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.4s cubic-bezier(0.32, 0.72, 0, 1);
   text-align: left;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.95rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 500;
   color: var(--text-main);
   width: 100%;
+  box-shadow: 0 4px 12px rgba(44,26,14,0.02);
 }
 
 .option-card:hover:not(:disabled) {
   border-color: var(--gold);
-  background: var(--cream);
-  transform: translateX(5px);
+  background: #fdfaf2;
+  transform: translateX(8px);
+  box-shadow: 0 10px 30px rgba(201,146,42,0.12);
 }
 
 .option-label {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  background: rgba(44,26,14,0.05);
-  border-radius: 8px;
-  font-weight: 700;
+  width: 36px;
+  height: 36px;
+  background: var(--cream-dark);
+  border-radius: 10px;
+  font-weight: 800;
   color: var(--gold);
   flex-shrink: 0;
+  transition: all 0.3s ease;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
 }
 
 .option-card.correct {
@@ -1035,22 +1041,24 @@ h1, h2, h3 {
 }
 
 .quiz-btn {
-  background: var(--brown-dark);
-  color: white;
+  background: #FFD700;
+  color: #000;
   border: none;
-  padding: 1rem 2rem;
+  padding: 1rem 3rem;
   border-radius: 999px;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
-  font-family: 'Inter', sans-serif;
+  transition: all 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.1rem;
   align-self: flex-end;
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
 }
 
 .quiz-btn:hover {
-  background: var(--gold);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(201,146,42,0.3);
+  background: #ffdf33;
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 35px rgba(255, 215, 0, 0.45);
 }
 
 .quiz-result {
@@ -2578,13 +2586,15 @@ h1, h2, h3 {
   line-height: 1;
 }
 .kn-title {
-  font-family: 'Outfit', sans-serif;
-  font-size: 2.2rem;
-  font-weight: 800;
-  color: #d32f2f;
+  margin: -2px 0 0 0;
+  padding: 0;
+  color: #d7322d;
+  font-family: "Times New Roman", Georgia, serif;
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: 0;
   text-transform: uppercase;
-  margin: 0;
-  line-height: 1.25;
 }
 .kn-content {
   display: flex;
@@ -2776,6 +2786,7 @@ h1, h2, h3 {
   font-family: 'Outfit', sans-serif;
   font-size: 2.2rem;
   font-weight: 800;
+  text-align: center;
   color: #d32f2f;
   text-transform: uppercase;
   margin: 0;
@@ -4197,9 +4208,29 @@ h1, h2, h3 {
 }
 
 .loto-color-prompt {
-  font-size: clamp(1.35rem, 2.5vw, 2.05rem);
-  margin: 0 0 1.35rem;
-  color: rgba(255, 255, 255, 0.95);
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 3rem;
+  text-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  letter-spacing: -0.01em;
+  position: relative;
+  display: inline-block;
+  animation: slideInFromTop 0.8s cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+
+.loto-color-prompt::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: var(--loto-accent, #ffe14d);
+  border-radius: 99px;
+  box-shadow: 0 0 20px var(--loto-accent-soft);
 }
 
 .loto-color-grid {

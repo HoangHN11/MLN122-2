@@ -1,570 +1,550 @@
 import { useState, useEffect, useRef } from 'react';
 
-/* ═══ CHARACTER PORTRAITS ════════════════════════════ */
+/* ═══ ASSETS ══════════════════════════════════════════ */
 const PORTRAITS = {
-  minh: '/images/char-minh.png',
-  friend_rich: '/images/char-rich.png',
-  boss: '/images/char-boss.png',
-  friend_hometown: '/images/char-hometown.png',
-  boy_que: '/images/boy_que.png',
-};
-
-/* ═══ AUDIO ASSETS ══════════════════════════════════ */
-const AUDIO = {
-  bgm: '/audios/atmospheric-bgm.mp3',
-  click: '/audios/click.mp3',
-  voices: {
-    1: '/audios/v-ch1.mp3',
-    2: '/audios/v-ch2.mp3',
-    3: '/audios/v-ch3.mp3',
-    4: '/audios/v-ch4.mp3',
-  }
+  an: '/images/Main character.png',
+  ba_hoa: '/images/Canh 1.png',
+  lan: '/images/Canh 2.png',
+  co_binh: '/images/Canh 3.png',
+  ong_sau: '/images/Canh 4.png',
+  ong_phuc: '/images/Canh 5.png',
+  anh_khang: '/images/Canh 6.png',
+  anh_quan: '/images/Canh 7.png',
 };
 
 const SCENARIOS = [
   {
-    id: 1, act: 'CHƯƠNG 1', title: 'Minh của ngày đầu', tag: '🏠 Ký túc xá - Tuần 1',
-    image: '/images/bg-dorm.png',
-    voice: AUDIO.voices[1],
-    ambient: '/audios/city-ambient.mp3',
-    context: 'Ký túc xá, tuần đầu nhập học. Tiếng xe cộ ồn ào ngoài cửa sổ. Minh vừa lên thành phố. Phòng trọ chật, tiền ít, nhưng lòng đầy hào hứng với cuộc sống sinh viên.',
-    character: { name: 'Thành (Bạn cùng phòng)', portrait: 'friend_rich', side: 'right', pitch: 1.8, rate: 1.2 },
-    dialogue: '"Nay đi quán cà phê "hot trend" đắt tiền để check-in đi Minh! Chỗ này mới nổi, chỉ khoảng 100k một ly thôi. Quẩy đi!"',
+    id: 1,
+    title: 'Chọn mô hình phát triển ban đầu',
+    npc: 'Bà Hòa',
+    npcRole: 'đại diện góc nhìn Nhà nước định hướng phát triển',
+    npcPortrait: 'ba_hoa',
+    bg: '/images/Canh 1.png',
+    question: '“Tỉnh Minh Phúc đang có cơ hội phát triển lớn. Theo anh, chúng ta nên chọn con đường nào để vừa tăng trưởng vừa không bỏ lại người dân phía sau?”',
     choices: [
-      { 
-        label: 'A', text: '"Mình gọi nước lọc thôi, tụi bạn cứ uống vui vẻ nhé."', 
-        type: 'integrity',
-        resultTitle: 'Minh vẫn là Minh', 
-        result: 'Bạn cười xòa, sống đúng với hoàn cảnh của mình. Lòng nhẹ nhõm dù ví tiền eo hẹp.', 
-        concept: 'Tồn tại xã hội quyết định Ý thức', 
-        score: 50
+      {
+        id: 'A',
+        text: 'Giao gần hết đất cho doanh nghiệp tư nhân lớn để tăng trưởng thật nhanh',
+        impact: { growth: 15, equity: -10, trust: -5 }
       },
-      { 
-        label: 'B', text: 'Mở app vay tạm tiền mua ly nước đắt nhất để chụp ảnh cùng mọi người', 
-        type: 'change',
-        resultTitle: 'Bắt đầu chạy theo hình thức', 
-        result: 'Ly nước lung linh trên ảnh, nhưng gánh nặng nợ nần bắt đầu nhen nhóm. Minh bắt đầu bị cuốn vào lối sống thành thị.', 
-        concept: 'Thay đổi Tồn tại xã hội', 
-        score: 10
+      {
+        id: 'B',
+        text: 'Giữ mô hình sản xuất nhỏ lẻ cũ để tránh rủi ro',
+        impact: { growth: -15, equity: 5, trust: 0 }
       },
-    ],
-    secret: { 
-      x: '75%', y: '40%', 
-      title: 'Mẩu giấy trên bàn học', 
-      content: '“Trong tiết học đầu tiên, thầy giáo đã nói: Ý thức không phải là cái gì tự nhiên có, nó được nhào nặn bởi chính những ly cà phê bạn uống, những bộ đồ bạn mặc và những người bạn chơi cùng.”' 
-    }
+      {
+        id: 'C',
+        text: 'Phát triển mô hình kết hợp: Nhà nước đầu tư hạ tầng, doanh nghiệp tham gia, hợp tác xã và người dân cùng vào chuỗi',
+        impact: { growth: 10, equity: 10, trust: 10 }
+      },
+    ]
   },
   {
-    id: 2, act: 'CHƯƠNG 2', title: 'Môi trường bắt đầu "thấm"', tag: '💼 Công ty thực tập - 6 tháng sau',
-    image: '/images/bg-office.png',
-    voice: AUDIO.voices[2],
-    ambient: '/audios/office-ambient.mp3',
-    context: '6 tháng sau. Minh lọt vào nhóm bạn "rich kid" và thực tập tại một công ty lớn. Ánh đèn văn phòng sáng chói. Xung quanh toàn đồ hiệu và những câu chuyện về "vốn liếng", "quan hệ".',
-    character: { name: 'Sếp (Giám đốc)', portrait: 'boss', side: 'right', pitch: 0.5, rate: 0.8 },
-    dialogue: '"Minh này, em chỉnh sửa báo cáo doanh thu "đẹp" hơn thực tế một chút nhé. Để dễ lùa khách hàng ký hợp đồng lớn ấy mà. Sếp bảo kê rồi, không ai phát hiện đâu!"',
+    id: 2,
+    title: 'Khi sản xuất tăng nhanh, mâu thuẫn giữa lợi nhuận và quyền lợi lao động bắt đầu xuất hiện. Lan, đại diện cho công nhân, đang tìm câu trả lời từ bạn về cách bảo vệ người lao động.',
+    npc: 'Lan',
+    npcRole: 'đại diện người lao động',
+    npcPortrait: 'lan',
+    bg: '/images/Gemini_Generated_Image_btgtp1btgtp1btgt_waifu2x_art_noise3_scale.png',
+    question: '“Công nhân tụi em tăng ca nhiều, lương còn thấp, điều kiện làm việc chưa ổn. Tỉnh sẽ ưu tiên giữ lợi nhuận cho doanh nghiệp hay bảo vệ quyền lợi người lao động?”',
     choices: [
-      { 
-        label: 'A', text: 'Từ chối khéo, nộp đúng số liệu thật', 
-        type: 'integrity',
-        resultTitle: 'Giữ vững lương tâm', 
-        result: 'Sếp không hài lòng, nhưng bạn thấy thanh thản vì không làm trái lương tâm. Minh vẫn đang cố gắng giữ mình.', 
-        concept: 'Tính độc lập tương đối của Ý thức', 
-        score: 50 
-      },
-      { 
-        label: 'B', text: 'Tặc lưỡi sửa một chút — "Chỉ là cách trình bày thôi mà"', 
-        type: 'adaptation',
-        resultTitle: 'Sự thỏa hiệp', 
-        result: 'Bạn tự nhủ chỉ là một chút thôi. Nhưng sự trung thực bắt đầu bị lung lay trước áp lực công việc.', 
-        concept: 'Sự đồng hóa của ý thức', 
-        score: 30 
-      },
-      { 
-        label: 'C',  text: 'Chủ động "vẽ" thêm số liệu cho mượt', 
-        type: 'change',
-        resultTitle: 'Thương trường là chiến trường', 
-        result: 'Bạn nhận được lời khen từ sếp. Minh đã bắt đầu chấp nhận luật chơi thực dụng của xã hội mới.', 
-        concept: 'Tồn tại xã hội quyết định Ý thức', 
-        score: 10
-      },
-    ],
-    secret: { 
-      x: '20%', y: '30%', 
-      title: 'Ghi chú trên tập hồ sơ', 
-      content: '“Sếp luôn nói về doanh số, nhưng đằng sau những con số đó là sự tha hóa của con người. Marx từng cảnh báo: Khi vật chất trở thành mục đích tự thân, con người chỉ còn là công cụ.”' 
-    }
+      { id: 'A', text: 'Ưu tiên doanh nghiệp để giữ môi trường đầu tư', impact: { growth: 10, equity: -15, trust: -10 } },
+      { id: 'B', text: 'Ép doanh nghiệp tăng lương mạnh ngay lập tức', impact: { growth: -10, equity: 10, trust: -5 } },
+      { id: 'C', text: 'Tổ chức đối thoại, tăng lương theo lộ trình, cải thiện an toàn lao động, gắn thêm thưởng theo năng suất', impact: { growth: 5, equity: 10, trust: 15 } },
+    ]
   },
   {
-    id: 3, act: 'CHƯƠNG 2', title: 'Tiếng vọng từ quá khứ', tag: '📱 Tin nhắn từ quê nhà',
-    image: '/images/bg-cafe.png',
-    voice: AUDIO.voices[3],
-    ambient: '/audios/rain-ambient.mp3',
-    weather: 'rain',
-    context: 'Tối đó về nhà, người bạn thân cởi trần tắm mưa ngày xưa ở quê nhắn tin mượn một ít tiền đóng học phí gấp vì gia đình gặp chuyện.',
-    character: { name: 'Tùng (Bạn ở quê)', portrait: 'boy_que', side: 'left', pitch: 1.0, rate: 0.9 },
-    dialogue: '"Minh ơi, nhà tớ kẹt quá. Cậu cho tớ mượn một ít nộp học phí được không? Tớ sẽ cố gắng trả sớm..."',
+    id: 3,
+    title: 'Một đợt thiên tai bất ngờ làm gián đoạn nguồn cung, đẩy giá cả leo thang. Cô Bình, đại diện cho người dân, đang lo lắng và chờ xem tỉnh sẽ phản ứng như thế nào.',
+    npc: 'Cô Bình',
+    npcRole: 'đại diện người dân và người tiêu dùng',
+    npcPortrait: 'co_binh',
+    bg: '/images/Canh 3.png',
+    question: '“Giá gạo, rau tăng nhanh quá, những người thu nhập thấp bắt đầu không xoay nổi. Không biết Tỉnh sẽ để thị trường tự điều chỉnh hay có can thiệp?”',
     choices: [
-      { 
-        label: 'A', text: 'Chuyển khoản ngay phần lớn số tiền mình có', 
-        type: 'integrity',
-        resultTitle: 'Tình bạn xuyên thời gian', 
-        result: 'Dù bản thân cũng đang kẹt tiền nhà, bạn vẫn ưu tiên người bạn cũ. Minh vẫn còn đó nét chân thành ngày nào.', 
-        concept: 'Bản chất con người', 
-        score: 50 
-      },
-      { 
-        label: 'B',  text: '"Để cuối tháng mình có lương rồi tính nhé"', 
-        type: 'adaptation',
-        resultTitle: 'Sự ưu tiên mới', 
-        result: 'Trong tài khoản vẫn dư dả, nhưng bạn chọn cách trì hoãn. Minh đã bắt đầu tính toán hơn cho lợi ích cá nhân.', 
-        concept: 'Sự tha hóa nhẹ', 
-        score: 30 
-      },
-      { 
-        label: 'C',  text: 'Đọc tin nhắn (Seen) nhưng… lờ đi không trả lời', 
-        type: 'change',
-        resultTitle: 'Quen với hào nhoáng', 
-        result: 'Bạn tiếp tục lướt xem ảnh du lịch của đồng nghiệp và quên hẳn tin nhắn. Minh đã thực sự đổi thay.', 
-        concept: 'Hoàn thiện tha hóa', 
-        score: 0 
-      },
-    ],
+      { id: 'A', text: 'Ép giá cứng toàn bộ hàng thiết yếu', impact: { growth: -10, equity: 5, trust: -10 } },
+      { id: 'B', text: 'Để thị trường tự quyết hoàn toàn', impact: { growth: 5, equity: -15, trust: -10 } },
+      { id: 'C', text: 'Tôn trọng giá thị trường nhưng dùng hàng dự trữ, trợ giá đúng nhóm cần hỗ trợ và kiểm tra đầu cơ', impact: { growth: 5, equity: 10, trust: 10 } },
+    ]
   },
   {
-    id: 4, act: 'CHƯƠNG 3', title: 'Nhìn lại gương', tag: '🏢 Cuối năm thứ 2',
-    image: '/images/bg-office.png',
-    voice: AUDIO.voices[4],
-    ambient: '/audios/office-ambient.mp3',
-    context: 'Cuối năm 2. Minh nay đã có mức thu nhập tốt, khoác lên người những bộ đồ đắt tiền, chính thức hòa nhập vào nhóm "elite" của trường.',
-    character: { name: 'Bảo (Người bạn cũ)', portrait: 'friend_hometown', side: 'left', pitch: 1.5, rate: 1.1 },
-    dialogue: '"Anh Minh ơi, sếp bảo không thích dân tỉnh lẻ lúa lúa, đưa em vào sẽ làm thấp giá trị kỳ thực tập của anh. Anh có thể nói đỡ giúp em được không?"',
+    id: 4,
+    title: 'Sau một giai đoạn tăng trưởng, ngân sách tỉnh bắt đầu dồi dào hơn. Ông Sáu, đại diện cho người dân sản xuất nhỏ, đặt câu hỏi về việc phân phối thành quả có công bằng hay không.',
+    npc: 'Ông Sáu',
+    npcRole: 'đại diện người dân sản xuất nhỏ và hợp tác xã',
+    npcPortrait: 'ong_sau',
+    bg: '/images/Gemini_Generated_Image_fx70hpfx70hpfx70_waifu2x_art_noise3_scale.png',
+    question: '“Tỉnh thu ngân sách cao hơn rồi. Thành quả này sẽ chủ yếu quay lại phục vụ dân, hay chỉ đổ vào những dự án nhìn đẹp trên báo cáo?”',
     choices: [
-      { 
-        label: 'A', text: 'Dõng dạc bảo vệ bạn mình và rút đơn nếu cần', 
-        type: 'integrity',
-        resultTitle: 'Thức tỉnh', 
-        result: 'Bạn dám bước ra để xây dựng một con đường mới tôn trọng giá trị con người. Ý thức đã chiến thắng hoàn cảnh.', 
-        concept: 'Sự giác ngộ ý thức', 
-        score: 60 
-      },
-      { 
-        label: 'B',  text: '"Để mình hỏi thử sếp xem sao" rồi… im lặng phớt lờ', 
-        type: 'adaptation',
-        resultTitle: 'Sự hèn nhát thầm lặng', 
-        result: 'Bạn sợ hỏng tiền đồ cá nhân nên đã chọn cách im lặng. Minh nay đã hoàn toàn thỏa hiệp với thực tại.', 
-        concept: 'Sự giằng xé', 
-        score: 20 
-      },
-      { 
-        label: 'C',  text: '"Bạn nên tự nộp CV đi, chỗ này chỉ tuyển người profile đẹp thôi"', 
-        type: 'change',
-        resultTitle: 'Sự trôi dạt hoàn toàn', 
-        result: 'Bạn nhìn người bạn cũ bằng ánh mắt kẻ cả. Minh trong gương giờ đã là một người hoàn toàn khác.', 
-        concept: 'Tha hóa hoàn toàn', 
-        score: 0 
-      },
-    ],
+      { id: 'A', text: 'Dồn tiền vào các dự án biểu tượng để tạo hình ảnh tăng trưởng', impact: { growth: 10, equity: -15, trust: -10 } },
+      { id: 'B', text: 'Chia đều như nhau cho tất cả mọi người', impact: { growth: -10, equity: 5, trust: -5 } },
+      { id: 'C', text: 'Vừa tái đầu tư sản xuất, vừa đầu tư giáo dục, y tế, hạ tầng và hỗ trợ đúng nhóm yếu thế', impact: { growth: 10, equity: 15, trust: 10 } },
+    ]
+  },
+  {
+    id: 5,
+    title: 'Một dự án lớn liên quan đến đất công xuất hiện, đi kèm với cơ hội tăng trưởng nhanh. Ông Phúc, đại diện cho lợi ích nhóm, đang đưa ra một đề nghị đầy cám dỗ.',
+    npc: 'Ông Phúc',
+    npcRole: 'đại diện nguy cơ lợi ích nhóm',
+    npcPortrait: 'ong_phuc',
+    bg: '/images/Gemini_Generated_Image_pqfvhapqfvhapqfv_waifu2x_art_noise3_scale.png',
+    question: '“Có một doanh nghiệp quen muốn nhận khu đất công này. Nếu làm nhanh thì tỉnh có tiền và có thành tích ngay. Anh có muốn ký duyệt luôn không?”',
+    choices: [
+      { id: 'A', text: 'Phê duyệt nhanh để đẩy tốc độ phát triển', impact: { growth: 10, equity: -10, trust: -15 } },
+      { id: 'B', text: 'Hoãn lại vô thời hạn để tránh rủi ro', impact: { growth: -10, equity: 0, trust: -5 } },
+      { id: 'C', text: 'Công khai thông tin, đấu thầu minh bạch, giám sát độc lập và xử lý đúng pháp luật', impact: { growth: 5, equity: 10, trust: 15 } },
+    ]
+  },
+  {
+    id: 6,
+    title: 'Nhiều nhà đầu tư nước ngoài bắt đầu quan tâm đến Minh Phúc. Anh Khang, đại diện nhà đầu tư, đang chờ bạn lựa chọn giữa lợi ích ngắn hạn và phát triển bền vững.',
+    npc: 'Anh Khang',
+    npcRole: 'đại diện nhà đầu tư nước ngoài',
+    npcPortrait: 'anh_khang',
+    bg: '/images/Canh 6.png',
+    question: '“Tôi có thể mang vốn lớn vào tỉnh rất nhanh. Nhưng anh muốn một dự án kiếm lời sớm, hay một dự án công nghệ tốt hơn, đào tạo lao động và gắn với phát triển lâu dài?”',
+    choices: [
+      { id: 'A', text: 'Chọn dự án vốn lớn nhất, miễn là tăng trưởng nhanh', impact: { growth: 15, equity: -5, trust: -10 } },
+      { id: 'B', text: 'Hạn chế gần hết FDI để tránh phụ thuộc', impact: { growth: -15, equity: 5, trust: 0 } },
+      { id: 'C', text: 'Chọn dự án công nghệ tốt, có đào tạo lao động, liên kết doanh nghiệp trong nước và hạn chế lệ thuộc', impact: { growth: 10, equity: 10, trust: 10 } },
+    ]
+  },
+  {
+    id: 7,
+    title: 'Căng thẳng lao động đã lên đến đỉnh điểm và bùng phát thành đình công. Anh Quân, Chủ tịch công đoàn, cần bạn đưa ra quyết định để ổn định tình hình.',
+    npc: 'Anh Quân',
+    npcRole: 'Chủ tịch công đoàn',
+    npcPortrait: 'anh_quan',
+    bg: '/images/Canh 7.png',
+    question: '“Ông ơi, đình công đã nổ ra rồi. Nếu xử lý sai, mâu thuẫn sẽ còn lớn hơn. Anh muốn dập nhanh cho yên chuyện, nhượng bộ một bên, hay ngồi vào bàn hòa giải để giải quyết tận gốc?”',
+    choices: [
+      { id: 'A', text: 'Dùng biện pháp cứng để dập đình công nhanh', impact: { growth: 0, equity: -10, trust: -15 } },
+      { id: 'B', text: 'Chấp nhận toàn bộ yêu cầu của một phía để hạ nhiệt', impact: { growth: -10, equity: 5, trust: -5 } },
+      { id: 'C', text: 'Hòa giải theo luật, có thương lượng và đặt lợi ích chung của tỉnh lên trên', impact: { growth: 5, equity: 10, trust: 15 } },
+    ]
   },
 ];
 
 /* ═══ COMPONENTS ══════════════════════════════════════ */
 
-function TransparentSprite({ portraitKey, side, speaking }) {
-  const src = PORTRAITS[portraitKey];
-  const canvasRef = useRef(null);
-
-  useEffect(() => {
-    const img = new Image();
-    img.src = src;
-    img.onload = () => {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      canvas.width = img.width;
-      canvas.height = img.height;
-      ctx.drawImage(img, 0, 0);
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const data = imageData.data;
-      for (let i = 0; i < data.length; i += 4) {
-        const r = data[i], g = data[i+1], b = data[i+2];
-        if (r < 35 && g < 35 && b < 35) data[i+3] = 0;
-      }
-      ctx.putImageData(imageData, 0, 0);
-    };
-  }, [src]);
-
-  const positioning = side === 'left' 
-    ? { left: '2%', transform: speaking ? 'translateY(-20px) scale(1.05)' : 'scale(1)' } 
-    : { right: '2%', transform: speaking ? 'translateY(-20px) scale(1.05)' : 'scale(1)' };
-
+function StatBar({ label, value, color }) {
   return (
-    <div style={{
-      position: 'absolute', bottom: 0, height: '80vh', zIndex: speaking ? 100 : 90,
-      transition: 'all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-      filter: speaking ? 'brightness(1.1) drop-shadow(0 0 30px rgba(255,255,255,0.2))' : 'brightness(0.7) grayscale(0.2)',
-      ...positioning
-    }}>
-      <canvas ref={canvasRef} style={{ height: '100%', width: 'auto', display: 'block', objectFit: 'contain' }} />
-      {speaking && (
-        <div style={{ 
-          position: 'absolute', top: -60, left: '50%', transform: 'translateX(-50%)',
-          background: 'gold', color: '#000', padding: '8px 25px', borderRadius: 20,
-          fontSize: 12, fontWeight: 900, whiteSpace: 'nowrap', boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
-          animation: 'fadeUp 0.3s ease both', zIndex: 110
-        }}>
-          ĐANG NÓI...
-        </div>
-      )}
-    </div>
-  );
-}
-
-function RainEffect() {
-  const drops = useRef(Array.from({ length: 150 }, (_, i) => ({
-    id: i, left: Math.random() * 100, delay: Math.random() * 2, duration: 0.5 + Math.random() * 0.5, opacity: 0.1 + Math.random() * 0.3
-  })));
-  return (
-    <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 10, overflow: 'hidden' }}>
-      {drops.current.map(d => (
-        <div key={d.id} style={{
-          position: 'absolute', top: -20, left: `${d.left}%`, width: 1, height: 20,
-          background: '#fff', opacity: d.opacity, animation: `rain-fall ${d.duration}s ${d.delay}s linear infinite`
-        }} />
-      ))}
-      <style>{`@keyframes rain-fall { to { transform: translateY(100vh); } }`}</style>
-    </div>
-  );
-}
-
-function ActTransition({ act, title, quote, onDone }) {
-  useEffect(() => {
-    const timer = setTimeout(onDone, 2500);
-    return () => clearTimeout(timer);
-  }, [onDone]);
-  return (
-    <div onClick={onDone} style={{ position: 'fixed', inset: 0, zIndex: 5000, background: '#000', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: 40, cursor: 'pointer' }}>
-      <p style={{ color: 'gold', fontSize: 13, fontWeight: 900, letterSpacing: 5, marginBottom: 15, animation: 'fadeUp 0.8s ease both' }}>{act.toUpperCase()}</p>
-      <h1 style={{ fontSize: 40, fontWeight: 900, color: '#fff', marginBottom: 30, animation: 'fadeUp 1s 0.2s ease both' }}>{title}</h1>
-      <p style={{ fontSize: 16, fontStyle: 'italic', color: 'rgba(255,255,255,0.6)', maxWidth: 550 }}>{quote}</p>
-      <div style={{ position: 'absolute', bottom: 40, fontSize: 8, color: 'rgba(255,255,255,0.2)', letterSpacing: 3 }}>CLICK TO SKIP</div>
-    </div>
-  );
-}
-
-function StarField({ driftLevel }) {
-  const stars = useRef(Array.from({ length: 120 }, (_, i) => ({
-    id: i, x: Math.random() * 100, y: Math.random() * 100, size: 1 + Math.random() * 2, dur: 5 + Math.random() * 10, delay: Math.random() * 5
-  })));
-  const starColor = driftLevel > 70 ? 'rgba(255, 50, 50, 0.6)' : driftLevel > 40 ? 'rgba(255, 255, 255, 0.7)' : 'rgba(74, 222, 128, 0.6)';
-  return (
-    <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
-      {stars.current.map(s => (
-        <div key={s.id} style={{ position: 'absolute', left: `${s.x}%`, top: `${s.y}%`, width: s.size, height: s.size, background: starColor, borderRadius: '50%', boxShadow: `0 0 10px ${starColor}`, animation: `twinkle ${s.dur}s ${s.delay}s infinite alternate` }} />
-      ))}
-    </div>
-  );
-}
-
-function SoundControl({ muted, setMuted }) {
-  return (
-    <div style={{ position: 'fixed', top: 20, right: 20, zIndex: 1000 }}>
-      <button onClick={() => setMuted(!muted)} style={{ background: 'rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '10px', borderRadius: '50%', cursor: 'pointer', width: 45, height: 45 }}>{muted ? '🔇' : '🔊'}</button>
-    </div>
-  );
-}
-
-function ConsciousnessMeter({ level }) {
-  return (
-    <div style={{ position: 'absolute', top: 30, left: 30, width: '220px', zIndex: 1000 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6, fontSize: 8, fontWeight: 900, color: 'rgba(255,255,255,0.4)', letterSpacing: 2 }}>
-        <span style={{ color: level < 40 ? '#4ade80' : 'inherit' }}>BẢN NGÃ</span>
-        <span style={{ color: level > 70 ? '#f87171' : 'inherit' }}>THA HÓA</span>
+    <div className="game-stat-item">
+      <div className="game-stat-label">
+        <span>{label}</span>
+        <span>{value}%</span>
       </div>
-      <div style={{ height: 4, width: '100%', background: 'rgba(255,255,255,0.05)', borderRadius: 10, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)' }}>
-        <div style={{ height: '100%', width: `${level}%`, background: `linear-gradient(to right, #4ade80, gold, #f87171)`, transition: 'width 1.5s ease' }} />
+      <div className="game-stat-bar-bg">
+        <div
+          className="game-stat-bar-fill"
+          style={{ width: `${value}%`, background: color }}
+        />
       </div>
     </div>
   );
 }
-
-/* ═══ MAIN APP ════════════════════════════════════════ */
 
 export default function GearOfEra() {
-  const [phase, setPhase] = useState('cinematic');
-  const [idx, setIdx] = useState(0);
-  const [picked, setPicked] = useState(null);
-  const [counts, setCounts] = useState({ integrity: 0, adaptation: 0, change: 0 });
-  const [muted, setMuted] = useState(false);
-  const [driftLevel, setDriftLevel] = useState(50);
-  const [shouldShake, setShouldShake] = useState(false);
-  const [isGlitching, setIsGlitching] = useState(false);
-  const [achievement, setAchievement] = useState(null);
-  const [mouse, setMouse] = useState({ x: 0, y: 0 });
-  const [showTransition, setShowTransition] = useState(false);
+  const [phase, setPhase] = useState('intro');
+  const [currentScenarioIdx, setCurrentScenarioIdx] = useState(0);
+  const [stats, setStats] = useState({ growth: 50, equity: 50, trust: 50 });
+  const [showResult, setShowResult] = useState(false);
+  const [lastImpact, setLastImpact] = useState(null);
+  const [endingStep, setEndingStep] = useState('summary');
 
-  const actQuotes = {
-    1: "“Tồn tại xã hội quyết định ý thức của con người.”",
-    2: "“Trong xã hội tư bản, vật chất trở thành quyền lực thống trị con người.”",
-    3: "“Con người tạo ra hoàn cảnh nhiều như hoàn cảnh tạo ra con người.”",
-    4: "“Mục tiêu là cải tạo thế giới, chứ không chỉ là giải thích nó.”"
+  const isGoodEnding = stats.growth >= 65 && stats.equity >= 60 && stats.trust >= 60;
+
+  const scenario = SCENARIOS[currentScenarioIdx];
+
+  const handleChoice = (choice) => {
+    const newStats = {
+      growth: Math.min(100, Math.max(0, stats.growth + choice.impact.growth)),
+      equity: Math.min(100, Math.max(0, stats.equity + choice.impact.equity)),
+      trust: Math.min(100, Math.max(0, stats.trust + choice.impact.trust)),
+    };
+    setStats(newStats);
+    setLastImpact(choice.impact);
+    setShowResult(true);
   };
 
-  const handleMouseMove = (e) => {
-    setMouse({ x: (e.clientX / window.innerWidth - 0.5) * 30, y: (e.clientY / window.innerHeight - 0.5) * 30 });
+  const nextScenario = () => {
+    setShowResult(false);
+    if (currentScenarioIdx < SCENARIOS.length - 1) {
+      setCurrentScenarioIdx(currentScenarioIdx + 1);
+      setPhase('scenario_intro');
+    } else {
+      setPhase('end');
+      setEndingStep('summary');
+    }
   };
-
-  const ambientRef = useRef(null);
-  useEffect(() => {
-    if (!muted && SCENARIOS[idx].ambient) {
-      if (ambientRef.current) ambientRef.current.pause();
-      ambientRef.current = new Audio(SCENARIOS[idx].ambient);
-      ambientRef.current.loop = true;
-      ambientRef.current.volume = 0.3;
-      ambientRef.current.play().catch(() => { });
-    }
-    return () => { if (ambientRef.current) ambientRef.current.pause(); };
-  }, [idx, muted, phase]);
-
-  const handleChoice = (i) => {
-    if (!muted) new Audio(AUDIO.click).play().catch(() => { });
-    const c = SCENARIOS[idx].choices[i]; 
-    setPicked(i);
-    setCounts(prev => ({ ...prev, [c.type]: prev[c.type] + 1 }));
-    
-    if (c.type === 'integrity') {
-      setDriftLevel(l => Math.max(0, l - 15));
-      setAchievement("🌟 QUYẾT ĐỊNH CHÍNH TRỰC");
-    }
-    if (c.type === 'change') {
-      setDriftLevel(l => Math.min(100, l + 20));
-      setShouldShake(true); setIsGlitching(true);
-      setAchievement("🥀 BẮT ĐẦU THA HÓA");
-      setTimeout(() => { setShouldShake(false); setIsGlitching(false); }, 500);
-    }
-    if (c.type === 'adaptation') {
-      setDriftLevel(l => Math.min(100, l + 10));
-      setAchievement("⚖️ SỰ THỎA HIỆP");
-    }
-
-    setTimeout(() => { setPhase('result'); setAchievement(null); }, 1200);
-  };
-
-  const parallax = { bg: { x: mouse.x * 0.5, y: mouse.y * 0.5 }, sprite: { x: mouse.x * -1, y: mouse.y * -1 } };
 
   return (
-    <div onMouseMove={handleMouseMove} style={{ position: 'relative', width: '100%', height: '100vh', background: '#050505', color: '#fff', overflow: 'hidden', fontFamily: "'Be Vietnam Pro', sans-serif" }} className={`${shouldShake ? 'shake-effect' : ''} ${driftLevel > 75 ? 'stress-pulse' : ''} ${isGlitching ? 'glitch-active' : ''}`}>
+    <div className="gear-game-container">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;300;400;600;900&display=swap');
-        @keyframes twinkle { from { opacity: 0.1 } to { opacity: 1 } }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px) } to { opacity: 1; transform: translateY(0) } }
-        @keyframes shake { 0%, 100% { transform: translate(0, 0); } 25% { transform: translate(-5px, 5px); } 50% { transform: translate(5px, -5px); } 75% { transform: translate(-5px, -5px); } }
-        .shake-effect { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
-        @keyframes heartbeat { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
-        .stress-pulse { animation: heartbeat 1s infinite ease-in-out; }
-        @keyframes glitch { 0% { transform: translate(0) } 20% { transform: translate(-5px, 5px) skewX(5deg); filter: hue-rotate(90deg); } 40% { transform: translate(5px, -5px) skewY(-5deg); filter: hue-rotate(180deg); } 60% { transform: translate(-3px, 3px); filter: brightness(2); } 100% { transform: translate(0) } }
-        .glitch-active { animation: glitch 0.3s ease infinite; }
-        .bg-blur { filter: blur(10px) brightness(0.4) !important; transition: 1s; }
-        .achievement-card { position: absolute; top: 100px; left: 30px; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-left: 4px solid gold; padding: 10px 20px; border-radius: 8px; animation: fadeUp 0.5s ease both; z-index: 2000; }
+        .gear-game-container {
+          position: relative;
+          width: 100%;
+          height: 100vh;
+          background: #000;
+          color: #fff;
+          font-family: 'Inter', sans-serif;
+          overflow: hidden;
+        }
+        .game-overlay {
+          position: absolute;
+          inset: 0;
+          background: rgba(0,0,0,0.6);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          padding: 2rem;
+          z-index: 10;
+        }
+        .game-bg {
+          position: absolute;
+          inset: 0;
+          background-size: cover;
+          background-position: center;
+          transition: transform 2s ease;
+        }
+        .game-vignette {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.8) 100%);
+          pointer-events: none;
+          z-index: 2;
+        }
+        .game-title {
+          font-size: 3.5rem;
+          font-weight: 900;
+          color: #FFD700;
+          margin-bottom: 1rem;
+          text-shadow: 0 0 20px rgba(255,215,0,0.3);
+        }
+        .lesson-title {
+          font-size: 2.8rem;
+          font-weight: 900;
+          margin-bottom: 1.5rem;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+        }
+        .lesson-text {
+          font-size: 1.4rem;
+          max-width: 800px;
+          line-height: 1.6;
+          color: #fff;
+          margin-bottom: 3rem;
+          font-weight: 500;
+          text-align: center;
+        }
+        .game-desc {
+          font-size: 1.2rem;
+          max-width: 800px;
+          line-height: 1.6;
+          margin-bottom: 2rem;
+          color: #e0e0e0;
+        }
+        .game-btn {
+          padding: 1rem 3rem;
+          background: #FFD700;
+          color: #000;
+          border: none;
+          border-radius: 50px;
+          font-family: "Arial", sans-serif;
+          font-weight: 500;
+          font-size: 1.1rem;
+          letter-spacing: 0.2px;
+          cursor: pointer;
+          transition: all 0.3s;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+        .game-btn:hover {
+          transform: scale(1.05);
+          box-shadow: 0 0 30px rgba(255,215,0,0.4);
+        }
+        .game-stats-panel {
+          position: absolute;
+          top: 2rem;
+          left: 2rem;
+          width: 250px;
+          z-index: 20;
+          background: rgba(0,0,0,0.4);
+          backdrop-filter: blur(10px);
+          padding: 1rem;
+          border-radius: 12px;
+          border: 1px solid rgba(255,255,255,0.1);
+        }
+        .game-stat-item {
+          margin-bottom: 1rem;
+        }
+        .game-stat-label {
+          display: flex;
+          justify-content: space-between;
+          font-size: 0.7rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          margin-bottom: 0.3rem;
+          color: rgba(255,255,255,0.7);
+        }
+        .game-stat-bar-bg {
+          height: 4px;
+          background: rgba(255,255,255,0.1);
+          border-radius: 2px;
+          overflow: hidden;
+        }
+        .game-stat-bar-fill {
+          height: 100%;
+          transition: width 1s ease;
+        }
+        .npc-container {
+          position: absolute;
+          bottom: 0;
+          left: -10%;
+          height: 80vh;
+          z-index: 5;
+        }
+        .npc-img {
+          height: 100%;
+          width: auto;
+          filter: drop-shadow(0 0 50px rgba(0,0,0,0.5));
+        }
+        .dialogue-box {
+          position: absolute;
+          bottom: 10%;
+          right: 5%;
+          width: 50%;
+          background: rgba(0,0,0,0.6);
+          backdrop-filter: blur(15px);
+          border: 1px solid rgba(255,255,255,0.2);
+          border-radius: 20px;
+          padding: 2rem;
+          z-index: 15;
+        }
+        .npc-name {
+          font-weight: 800;
+          color: #FFD700;
+          margin-bottom: 0.5rem;
+          font-size: 1.2rem;
+        }
+        .dialogue-text {
+          font-size: 1.1rem;
+          line-height: 1.5;
+          margin-bottom: 1.5rem;
+        }
+        .choice-list {
+          display: flex;
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+        .choice-btn {
+          background: #fff;
+          color: #000;
+          border: none;
+          padding: 1rem 1.5rem;
+          border-radius: 12px;
+          text-align: left;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s;
+          font-size: 0.95rem;
+          line-height: 1.3;
+        }
+        .choice-btn:hover {
+          background: #FFD700;
+          transform: translateX(10px);
+        }
+        .impact-popup {
+          position: absolute;
+          inset: 0;
+          background: rgba(0,0,0,0.8);
+          z-index: 100;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .impact-card {
+          background: #111;
+          padding: 3rem;
+          border-radius: 24px;
+          border: 1px solid #FFD700;
+          max-width: 500px;
+          text-align: center;
+        }
+        .impact-title {
+          font-size: 2rem;
+          color: #FFD700;
+          margin-bottom: 1.5rem;
+        }
+        .impact-item {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 0.5rem;
+          font-size: 1.1rem;
+        }
+        .impact-plus { color: #4ade80; }
+        .impact-minus { color: #f87171; }
       `}</style>
 
-      <StarField driftLevel={driftLevel} />
-      <SoundControl muted={muted} setMuted={setMuted} />
-      {phase === 'game' && !showTransition && <ConsciousnessMeter level={driftLevel} />}
-      {showTransition && <ActTransition act={SCENARIOS[idx].act} title={SCENARIOS[idx].title} quote={actQuotes[idx + 1]} onDone={() => setShowTransition(false)} />}
-      {achievement && <div className="achievement-card"><span style={{ fontSize: 10, color: 'gold', fontWeight: 900, display: 'block' }}>DANH HIỆU</span><span style={{ fontSize: 14, fontWeight: 900 }}>{achievement}</span></div>}
+      <div className="game-bg" style={{ backgroundImage: `url(${scenario.bg})` }} />
 
-      <div style={{ height: '100%', position: 'relative' }}>
-        {phase === 'cinematic' && <Cinematic onDone={() => setPhase('rules')} />}
-        {phase === 'rules' && <RulesScreen onStart={() => setPhase('game')} />}
-        {phase === 'game' && <GameScreen scenario={SCENARIOS[idx]} onChoice={handleChoice} muted={muted} parallax={parallax} />}
-        {phase === 'result' && <ResultScreen choice={SCENARIOS[idx].choices[picked]} onNext={() => { if (idx + 1 < SCENARIOS.length) { setIdx(idx + 1); setPhase('game'); setShowTransition(true); } else setPhase('end'); }} />}
-        {phase === 'end' && <EndScreen counts={counts} onRestart={() => window.location.reload()} />}
-      </div>
-    </div>
-  );
-}
-
-function Cinematic({ onDone }) {
-  const [displayText, setDisplayText] = useState('');
-  const fullText = "DRIFT — Khi đời sống đổi thay. Minh, một sinh viên tỉnh lẻ lên thành phố với trái tim chân phương. Nhưng giữa dòng xoáy hào nhoáng của vật chất và danh vọng, liệu Minh có giữ được chính mình?";
-  useEffect(() => {
-    let i = 0;
-    const t = setInterval(() => { i++; setDisplayText(fullText.slice(0, i)); if (i >= fullText.length) clearInterval(t); }, 40);
-    return () => clearInterval(t);
-  }, []);
-  return (
-    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: 40 }}>
-      <h1 style={{ fontSize: 60, fontWeight: 900, color: 'gold', marginBottom: 30, letterSpacing: 10, animation: 'fadeUp 1s ease both' }}>DRIFT</h1>
-      <p style={{ fontSize: 20, color: '#ccc', maxWidth: 700, fontStyle: 'italic' }}>{displayText}</p>
-      {displayText.length >= fullText.length && <button onClick={onDone} style={{ marginTop: 40, padding: '18px 60px', background: 'gold', border: 'none', borderRadius: 50, fontWeight: 900, cursor: 'pointer' }}>BƯỚC VÀO →</button>}
-    </div>
-  );
-}
-
-function RulesScreen({ onStart }) {
-  return (
-    <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
-      <div style={{ maxWidth: 500, background: 'rgba(255,255,255,0.02)', padding: 50, borderRadius: 30, border: '1px solid rgba(255,255,255,0.1)' }}>
-        <h2 style={{ color: 'gold', marginBottom: 20 }}>LUẬT CHƠI</h2>
-        <p style={{ color: '#aaa', marginBottom: 30 }}>Mỗi lựa chọn của bạn sẽ tác động đến Ý thức của Minh theo quy luật tồn tại xã hội. Hãy cân nhắc kỹ.</p>
-        <button onClick={onStart} style={{ padding: '15px 50px', background: 'gold', border: 'none', borderRadius: 10, fontWeight: 900, cursor: 'pointer' }}>BẮT ĐẦU</button>
-      </div>
-    </div>
-  );
-}
-
-function GameScreen({ scenario, onChoice, muted, parallax }) {
-  const [step, setStep] = useState('context');
-  const [displayText, setDisplayText] = useState('');
-  const [showSecret, setShowSecret] = useState(false);
-  const [isTyping, setIsTyping] = useState(false);
-  const typingTimer = useRef(null);
-
-  const startDialogue = () => {
-    setStep('dialogue');
-    setIsTyping(true);
-    let i = 0;
-    setDisplayText('');
-    
-    if (typingTimer.current) clearInterval(typingTimer.current);
-    
-    typingTimer.current = setInterval(() => {
-      i++;
-      setDisplayText(scenario.dialogue.slice(0, i));
-      if (i >= scenario.dialogue.length) {
-        clearInterval(typingTimer.current);
-        setIsTyping(false);
-        // Only auto-show choices if not using TTS or if TTS is very short
-        if (muted) setTimeout(() => setStep('choices'), 1000);
-      }
-    }, 40);
-
-    if (!muted) {
-      window.speechSynthesis.cancel();
-      const ut = new SpeechSynthesisUtterance(scenario.dialogue);
-      ut.lang = 'vi-VN';
-      ut.pitch = scenario.character.pitch;
-      ut.rate = scenario.character.rate;
-      ut.onend = () => {
-        // Voice finished, now we can safely show choices
-        setStep('choices'); 
-      };
-      window.speechSynthesis.speak(ut);
-    }
-  };
-
-  const skipTyping = () => {
-    if (isTyping) {
-      clearInterval(typingTimer.current);
-      setDisplayText(scenario.dialogue);
-      setIsTyping(false);
-      if (muted) setStep('choices');
-    }
-  };
-
-  useEffect(() => {
-    return () => {
-      if (typingTimer.current) clearInterval(typingTimer.current);
-      window.speechSynthesis.cancel();
-    };
-  }, []);
-
-  return (
-    <div style={{ height: '100%', position: 'relative' }} onClick={step === 'dialogue' ? skipTyping : null}>
-      {scenario.weather === 'rain' && <RainEffect />}
-      <div style={{ position: 'absolute', inset: '-50px', backgroundImage: `url(${scenario.image})`, backgroundSize: 'cover', backgroundPosition: 'center', filter: step === 'choices' ? 'blur(10px) brightness(0.3)' : 'brightness(0.4)', transform: `translate(${parallax.bg.x}px, ${parallax.bg.y}px)`, transition: 'all 1s' }} />
-      {step === 'context' && (
-        <div style={{ position: 'relative', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.8)' }}>
-          <div style={{ maxWidth: 600, textAlign: 'center', animation: 'fadeUp 1s ease' }}>
-            <h2 style={{ color: 'gold', marginBottom: 20 }}>{scenario.title}</h2>
-            <p style={{ lineHeight: 1.8, marginBottom: 40 }}>{scenario.context}</p>
-            <button onClick={startDialogue} style={{ padding: '15px 50px', background: 'gold', border: 'none', borderRadius: 50, fontWeight: 900, cursor: 'pointer' }}>TIẾP TỤC</button>
+      {phase === 'intro' && (
+        <div className="game-overlay" style={{ backgroundImage: 'url(https://sf-static.upanhlaylink.com/img/image_20260422fc331d30b25ab2c35076ec0b7259dbcc.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+          <div style={{ background: 'rgba(0,0,0,0.5)', position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
+            <h1 className="game-title">Giới thiệu game</h1>
+            <p className="game-desc">
+              Người chơi vào vai một nhân vật có quyền ra quyết định phát triển kinh tế cho một địa phương đang chuyển mình.
+              Mỗi lựa chọn đều tác động đến <span style={{ color: '#FFD700' }}>ba mặt</span>:
+            </p>
+            <div style={{ fontSize: '1.4rem', fontWeight: 700, marginBottom: '6rem' }}>
+              <p>Tăng trưởng kinh tế</p>
+              <p>Công bằng xã hội</p>
+              <p>Niềm tin xã hội / ổn định lâu dài</p>
+            </div>
+            <button className="game-btn" onClick={() => setPhase('role')} style={{ marginTop: '2rem' }}>Tiếp tục</button>
           </div>
         </div>
       )}
 
-      {(step === 'dialogue' || step === 'choices') && (
+      {phase === 'role' && (
+        <div className="game-overlay" style={{ backgroundImage: 'url(https://sf-static.upanhlaylink.com/img/image_20260422fc331d30b25ab2c35076ec0b7259dbcc.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+          <div style={{ background: 'rgba(0,0,0,0.6)', position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
+            <h1 className="game-title">Game Nhập Vai</h1>
+            <p className="game-desc">
+              Bạn sẽ nhập vai An, Phó Chủ tịch phụ trách kinh tế của tỉnh hư cấu Minh Phúc, và đưa ra những quyết định quan trọng để dẫn dắt tỉnh phát triển.
+              Mỗi lựa chọn của bạn sẽ ảnh hưởng trực tiếp đến tăng trưởng kinh tế, công bằng xã hội và niềm tin xã hội/ổn định lâu dài.
+            </p>
+            <button className="game-btn" onClick={() => setPhase('scenario_intro')} style={{ marginTop: '4rem' }}>
+              Bắt đầu chơi <span style={{ background: '#000', color: '#FFD700', borderRadius: '50%', width: '24px', height: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>➔</span>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {phase === 'scenario_intro' && (
+        <div className="game-overlay" style={{ backgroundImage: 'url(https://sf-static.upanhlaylink.com/img/image_20260422fc331d30b25ab2c35076ec0b7259dbcc.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+          <div style={{ background: 'rgba(0,0,0,0.6)', position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
+            <h1 className="game-title">Tình huống {scenario.id}</h1>
+            <p className="game-desc" style={{ fontSize: '1.5rem', marginBottom: '4rem' }}>
+              {scenario.id === 1 ? 'Minh Phúc đang đứng trước bước ngoặt lớn khi dòng vốn và cơ hội đầu tư bắt đầu đổ về. Bà Hòa, đại diện cho định hướng của Nhà nước, đang chờ quyết định của bạn để xác định con đường phát triển lâu dài.' : scenario.title}
+            </p>
+            <button className="game-btn" onClick={() => setPhase('gameplay')} style={{ marginTop: '2rem' }}>Nhấn để tiếp tục</button>
+          </div>
+        </div>
+      )}
+
+      {phase === 'gameplay' && (
         <>
-          <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 80, transform: `translate(${parallax.sprite.x}px, ${parallax.sprite.y}px)`, transition: '0.1s' }}>
-            <TransparentSprite portraitKey={scenario.character.portrait} side={scenario.character.side} speaking={step === 'dialogue'} />
-            <TransparentSprite portraitKey="minh" side={scenario.character.side === 'left' ? 'right' : 'left'} speaking={step === 'choices'} />
+          <div className="game-bg" style={{ backgroundImage: currentScenarioIdx === 0 ? 'url(/images/Gemini_Generated_Image_fl41g0fl41g0fl41_waifu2x_art_noise3_scale.png)' : `url(${scenario.bg})` }} />
+          <div className="game-vignette" />
+          <div className="game-stats-panel">
+            <StatBar label="Tăng trưởng kinh tế" value={stats.growth} color="#ef4444" />
+            <StatBar label="Công bằng xã hội" value={stats.equity} color="#22c55e" />
+            <StatBar label="Niềm tin xã hội" value={stats.trust} color="#eab308" />
           </div>
-          <div style={{ position: 'absolute', bottom: 50, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', zIndex: 100 }}>
-            <div style={{ maxWidth: 800, textAlign: 'center', marginBottom: step === 'choices' ? 30 : 50 }}>
-              <p style={{ color: 'gold', fontSize: 12, fontWeight: 900, marginBottom: 5 }}>{scenario.character.name}:</p>
-              <p style={{ fontSize: 24, fontWeight: 600 }}>{displayText}</p>
+
+          <div className="npc-container" style={{ left: '-10%', bottom: '0', height: '90vh' }}>
+            <img src={PORTRAITS[scenario.npcPortrait] || PORTRAITS.ba_hoa} alt={scenario.npc} className="npc-img" style={{ height: '100%' }} onError={(e) => e.target.src = '/images/Main character.png'} />
+          </div>
+
+          <div className="dialogue-box" style={{ right: '5%', bottom: '15%', width: '45%', background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.3)', borderRadius: '20px', padding: '2rem' }}>
+            <div className="npc-name" style={{ fontSize: '1.6rem', color: '#fff', fontWeight: '800', marginBottom: '0.5rem' }}>{scenario.npc}</div>
+            <p className="dialogue-text" style={{ fontSize: '1.2rem', lineHeight: '1.5', color: '#fff', marginBottom: '2rem' }}>{scenario.question}</p>
+            <div className="choice-list">
+              {scenario.choices.map((c) => (
+                <button 
+                  key={c.id} 
+                  className="choice-btn" 
+                  onClick={() => handleChoice(c)}
+                  style={{ background: '#fff', color: '#000', marginBottom: '0.8rem', padding: '1rem 1.5rem', borderRadius: '15px', border: 'none', fontWeight: 'bold', textAlign: 'left', cursor: 'pointer' }}
+                >
+                  <span style={{ marginRight: '0.5rem' }}>{c.id}.</span> {c.text}
+                </button>
+              ))}
             </div>
-            {step === 'choices' && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%', maxWidth: 500 }}>
-                {scenario.choices.map((c, i) => (
-                  <button key={i} onClick={() => onChoice(i)} style={{ padding: '15px 25px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 15, color: '#fff', cursor: 'pointer', textAlign: 'left' }}>{c.text}</button>
-                ))}
-              </div>
-            )}
           </div>
+
+          {showResult && (
+            <div className="impact-popup">
+              <div className="impact-card">
+                <h2 className="impact-title">Quyết định đã đưa ra</h2>
+                <div style={{ marginBottom: '2rem' }}>
+                  <div className="impact-item">
+                    <span>Tăng trưởng kinh tế:</span>
+                    <span className={lastImpact.growth >= 0 ? 'impact-plus' : 'impact-minus'}>
+                      {lastImpact.growth >= 0 ? '+' : ''}{lastImpact.growth}%
+                    </span>
+                  </div>
+                  <div className="impact-item">
+                    <span>Công bằng xã hội:</span>
+                    <span className={lastImpact.equity >= 0 ? 'impact-plus' : 'impact-minus'}>
+                      {lastImpact.equity >= 0 ? '+' : ''}{lastImpact.equity}%
+                    </span>
+                  </div>
+                  <div className="impact-item">
+                    <span>Niềm tin xã hội:</span>
+                    <span className={lastImpact.trust >= 0 ? 'impact-plus' : 'impact-minus'}>
+                      {lastImpact.trust >= 0 ? '+' : ''}{lastImpact.trust}%
+                    </span>
+                  </div>
+                </div>
+                <button className="game-btn" style={{ margin: '0 auto' }} onClick={nextScenario}>Tiếp tục hành trình</button>
+              </div>
+            </div>
+          )}
         </>
       )}
 
-      {scenario.secret && step === 'dialogue' && (
-        <div onClick={() => setShowSecret(true)} style={{ position: 'absolute', left: scenario.secret.x, top: scenario.secret.y, width: 20, height: 20, background: 'gold', borderRadius: '50%', cursor: 'pointer', boxShadow: '0 0 10px gold' }} />
+      {phase === 'end' && (
+        <>
+          {endingStep === 'summary' ? (
+            <div className="game-overlay" style={{ backgroundImage: `url(${isGoodEnding ? '/images/Gemini_Generated_Image_fl41g0fl41g0fl41_waifu2x_art_noise3_scale.png' : '/images/Gemini_Generated_Image_f3e02ef3e02ef3e0_waifu2x_art_noise3_scale.png'})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+              <div className="game-vignette" />
+              <div style={{ background: 'rgba(0,0,0,0.6)', position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem', zIndex: 5 }}>
+                <h1 className="game-title" style={{ color: isGoodEnding ? '#4ade80' : '#f87171', fontSize: '2.5rem' }}>
+                  {isGoodEnding ? '“PHÁT TRIỂN CÓ ĐỊNH HƯỚNG”' : '“TĂNG TRƯỞNG LỆCH HƯỚNG”'}
+                </h1>
+                
+                <div style={{ width: '350px', margin: '2rem 0' }}>
+                  <StatBar label="Tăng trưởng kinh tế" value={stats.growth} color="#ef4444" />
+                  <StatBar label="Công bằng xã hội" value={stats.equity} color="#22c55e" />
+                  <StatBar label="Niềm tin xã hội / ổn định lâu dài" value={stats.trust} color="#eab308" />
+                </div>
+
+                <div className="dialogue-box" style={{ position: 'relative', bottom: 'auto', right: 'auto', width: '80%', maxWidth: '800px', background: 'rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.3)', marginBottom: '2rem' }}>
+                  <p style={{ fontSize: '1.1rem', lineHeight: '1.6', textAlign: 'center', margin: 0 }}>
+                    {isGoodEnding 
+                      ? "Sau 5 năm, kinh tế Minh Phúc tăng trưởng ổn định, doanh nghiệp phát triển bền vững, người lao động có việc làm tốt hơn và các nhóm yếu thế vẫn được hỗ trợ. Tỉnh cũng cải thiện rõ rệt về y tế, giáo dục, giao thông và quản lý minh bạch hơn, giúp người dân tin rằng thành quả phát triển thuộc về số đông."
+                      : "Sau 5 năm, Minh Phúc có thể tăng trưởng nhanh nhưng nền kinh tế phát triển lệch hướng, doanh nghiệp nhỏ suy yếu, khoảng cách giàu nghèo gia tăng và người dân dần mất niềm tin. Tỉnh cũng trở nên bất ổn hơn khi đình công, ô nhiễm và nghi ngờ về sự thiếu minh bạch trong quản lý ngày càng lớn."
+                    }
+                  </p>
+                </div>
+
+                <button className="game-btn" style={{ margin: '0 auto' }} onClick={() => setEndingStep('lesson')}>Xem bài học rút ra</button>
+              </div>
+            </div>
+          ) : (
+            <div className="game-overlay" style={{ backgroundImage: `url(${isGoodEnding ? '/images/Gemini_Generated_Image_fl41g0fl41g0fl41_waifu2x_art_noise3_scale.png' : '/images/Gemini_Generated_Image_f3e02ef3e02ef3e0_waifu2x_art_noise3_scale.png'})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+              <div className="game-vignette" />
+              <div style={{ background: 'rgba(0,0,0,0.7)', position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
+                <h2 className="lesson-title" style={{ color: isGoodEnding ? '#4ade80' : '#f87171' }}>Bài học rút ra</h2>
+                <div style={{ width: '100px', height: '2px', background: 'rgba(255,255,255,0.5)', marginBottom: '2rem' }}></div>
+                <p className="lesson-text">
+                  {isGoodEnding 
+                    ? "Muốn phát triển đúng định hướng xã hội chủ nghĩa, cần kết hợp động lực của thị trường với vai trò điều tiết của Nhà nước, gắn tăng trưởng kinh tế với công bằng xã hội."
+                    : "Nếu chỉ chạy theo lợi nhuận, tốc độ hoặc điều hành cực đoan, bỏ qua vai trò điều tiết của Nhà nước và sự hài hòa lợi ích, thì tăng trưởng sẽ không tạo ra phát triển bền vững."
+                  }
+                </p>
+                <div style={{ width: '100px', height: '2px', background: 'rgba(255,255,255,0.5)', marginBottom: '3rem' }}></div>
+                <button className="game-btn" style={{ margin: '0 auto' }} onClick={() => window.location.reload()}>Chơi lại từ đầu</button>
+              </div>
+            </div>
+          )}
+        </>
       )}
-
-      {showSecret && (
-        <div onClick={() => setShowSecret(false)} style={{ position: 'absolute', inset: 0, zIndex: 2000, background: 'rgba(0,0,0,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: 40 }}>
-          <div style={{ maxWidth: 400, border: '1px solid gold', padding: 30, borderRadius: 20 }}>
-            <h3 style={{ color: 'gold', marginBottom: 15 }}>{scenario.secret.title}</h3>
-            <p>{scenario.secret.content}</p>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function ResultScreen({ choice, onNext }) {
-  return (
-    <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', background: 'rgba(0,0,0,0.95)' }}>
-      <div style={{ maxWidth: 600, padding: 40 }}>
-        <h2 style={{ color: 'gold', marginBottom: 20 }}>{choice.resultTitle}</h2>
-        <p style={{ marginBottom: 40, lineHeight: 1.6 }}>{choice.result}</p>
-        <button onClick={onNext} style={{ padding: '15px 50px', background: '#fff', color: '#000', border: 'none', borderRadius: 50, fontWeight: 900, cursor: 'pointer' }}>TIẾP TỤC</button>
-      </div>
-    </div>
-  );
-}
-
-function EndScreen({ counts, onRestart }) {
-  let title = "🌟 KẾT CỤC 1: VẪN LÀ MÌNH";
-  let message = "Nhận diện được sự độc hại của môi trường, Minh không chỉ giữ được bản ngã mà còn dám bước ra để xây dựng một con đường mới. Ý thức đã chiến thắng hoàn cảnh.";
-  let card = "Ý thức xã hội có tính độc lập tương đối. Sự giác ngộ giúp con người không đầu hàng hoàn cảnh vật chất, mà quay lại hành động để cải tạo thực tại.";
-  let color = "#4ade80";
-
-  if (counts.adaptation + counts.change >= 3) {
-    title = "🥀 KẾT CỤC 3: MINH ĐÃ TRÔI";
-    message = "Không có quyết định sinh tử nào đánh gục ta — chỉ là ngàn lần ta tự động buông tay trước mãnh lực của đồng tiền và danh vọng. Minh trong gương giờ đã là một người khác.";
-    card = "Không phải ý thức quyết định đời sống mà chính đời sống quyết định ý thức. Ý thức xã hội thường lạc hậu hơn tồn tại xã hội. Ta dễ dàng tha hóa bản ngã trước khi kịp nhận ra môi trường vật chất xung quanh đã hoàn toàn đổi thay.";
-    color = "#f87171";
-  } else if (counts.integrity < 3) {
-    title = "⚖️ KẾT CỤC 2: MINH ĐANG GIỮA DÒNG";
-    message = "Phần lớn chúng ta đều ở đây — không hoàn toàn mất đi bản ngã trong sáng cũ, nhưng cũng đã dần thỏa hiệp và quen thuật với sự thực dụng của thực tại mới.";
-    card = "Sự giằng xé giữa tàn dư của tư duy cũ và hoàn cảnh vật chất mới. Ý thức chưa hoàn toàn bị đồng hóa, nhưng cũng chưa đủ sức mạnh để thay đổi tồn tại xã hội.";
-    color = "gold";
-  }
-
-  return (
-    <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', background: 'radial-gradient(circle, #1a1a1a 0%, #000 100%)' }}>
-      <div style={{ animation: 'fadeUp 1s ease both', maxWidth: 800, padding: 40 }}>
-        <h2 style={{ fontSize: 22, color: '#9ca3af', marginBottom: 20, letterSpacing: 4 }}>KẾT THÚC HÀNH TRÌNH</h2>
-        <div style={{ fontSize: 48, fontWeight: 900, color: color, textShadow: `0 0 40px ${color}33`, lineHeight: 1.2, marginBottom: 30 }}>{title}</div>
-        <p style={{ fontSize: 22, lineHeight: 1.8, color: '#d1d5db', marginBottom: 50, fontStyle: 'italic', background: 'rgba(255,255,255,0.03)', padding: 30, borderRadius: 20 }}>"{message}"</p>
-        
-        <div className="marx-card" style={{ padding: '30px', textAlign: 'left', borderLeft: `8px solid ${color}`, background: 'rgba(0,0,0,0.5)', marginBottom: 50 }}>
-          <p style={{ color: 'gold', fontWeight: 900, fontSize: 13, marginBottom: 15, letterSpacing: 2 }}>🃏 GÓC NHÌN CỦA MARX</p>
-          <p style={{ fontSize: 18, lineHeight: 1.6, color: '#fff' }}>"{card}"</p>
-        </div>
-
-        <button onClick={onRestart} style={{ padding: '18px 70px', background: 'gold', color: '#000', border: 'none', borderRadius: 50, fontWeight: 900, cursor: 'pointer', boxShadow: '0 10px 40px rgba(212,175,55,0.3)', fontSize: 18 }}>CHƠI LẠI</button>
-      </div>
     </div>
   );
 }

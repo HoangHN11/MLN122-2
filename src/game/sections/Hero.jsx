@@ -37,7 +37,7 @@ export default function Hero() {
 
         {/* Action buttons */}
         <div className="hero-v2-actions">
-          <a href="#quiz" className="hero-v2-btn-ref">
+          <a href="#ton-tai" className="hero-v2-btn-ref">
             <span>Bắt đầu học ngay!</span>
             <div className="hero-v2-btn-arrow">›</div>
           </a>

@@ -19,8 +19,11 @@ export const GamePage = () => {
 
       <KinhTeThiTruong />
       <QuanHeSoHuu />
-      <section id="quiz">
+      <section id="loto">
         <LotoShow />
+      </section>
+      <section id="quiz">
+        <GearOfEra />
       </section>
     </div>
   );

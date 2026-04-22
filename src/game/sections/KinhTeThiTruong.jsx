@@ -56,7 +56,7 @@ export default function KinhTeThiTruong() {
 
           <div className="tat-yeu-grid">
             <div className="ty-col">
-              <div className="ty-header-box">Phù hợp với xu hướng phát triển khách quan</div>
+              <div className="ty-header-box">Phù hợp với xu hướng phát triển khách quan.</div>
               <div className="ty-content-box">
                 <ul className="ty-list">
                   <li>Tính quy luật</li>
@@ -79,7 +79,7 @@ export default function KinhTeThiTruong() {
             </div>
 
             <div className="ty-col">
-              <div className="ty-header-box">Phù hợp với nguyện vọng của nhân dân</div>
+              <div className="ty-header-box">Phù hợp với nguyện vọng của <br/>nhân dân.</div>
               <div className="ty-content-box">
                 <ul className="ty-list">
                   <li>Khát vọng dân tộc</li>

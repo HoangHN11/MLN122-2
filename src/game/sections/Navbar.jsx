@@ -3,9 +3,8 @@ import { useState, useEffect } from 'react';
 const NAV_LINKS = [
   { href: '#hero', label: 'Home' },
   { href: '#ton-tai', label: 'Học Thuyết' },
-  { href: '#quiz', label: 'Lô Tô' },
+  { href: '#loto', label: 'Lô Tô' },
   { href: '#quiz', label: 'Khảo Nghiệm' },
-  { href: '#chat', label: 'AI Chatbot' },
   { href: '#ai', label: 'AI Usage' },
 ];
 
@@ -31,7 +30,7 @@ export default function Navbar({ activeTab, onTabChange }) {
       });
     }, { root: null, rootMargin: '-20% 0px -60% 0px', threshold: 0 });
 
-    const sections = ['hero', 'ton-tai', 'quiz']
+    const sections = ['hero', 'ton-tai', 'loto', 'quiz']
       .map(id => document.getElementById(id))
       .filter(el => el !== null);
       
