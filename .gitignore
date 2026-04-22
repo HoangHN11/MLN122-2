@@ -28,3 +28,6 @@ dist-ssr
 
 # AI Skills Folder
 skills/
+
+# Vite temporary files
+vite.config.js.timestamp-*
