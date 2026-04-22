@@ -3,6 +3,7 @@ import { BookPage } from "./book/BookPage";
 import { GamePage } from "./game/GamePage";
 import { AIUsagePage } from "./ai-usage/AIUsagePage";
 import Navbar from "./game/sections/Navbar";
+import ChatBot from "./components/ChatBot";
 
 const TABS = [
   { id: "book", label: "Sách 3D" },
@@ -47,6 +48,8 @@ function App() {
         {activeTab === "game" && <GamePage />}
         {activeTab === "ai" && <AIUsagePage />}
       </div>
+      {/* Floating Chatbot Island */}
+      <ChatBot />
     </div>
   );
 }
