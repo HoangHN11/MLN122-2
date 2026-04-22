@@ -6,6 +6,7 @@ import QuanHeSoHuu from './sections/QuanHeSoHuu';
 import GearOfEra from './sections/GearOfEra';
 
 import useScrollReveal from '../hooks/useScrollReveal';
+import LotoShow from './sections/LotoShow';
 
 export const GamePage = () => {
   useScrollReveal();
@@ -18,13 +19,9 @@ export const GamePage = () => {
 
       <KinhTeThiTruong />
       <QuanHeSoHuu />
-       <section id="quiz">
-
-      
-      <GearOfEra />
-       </section>
-
-     
+      <section id="quiz">
+        <LotoShow />
+      </section>
     </div>
   );
 };
