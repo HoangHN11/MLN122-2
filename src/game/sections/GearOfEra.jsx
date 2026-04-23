@@ -224,14 +224,14 @@ export default function GearOfEra() {
           text-shadow: 0 0 20px rgba(255,215,0,0.3);
         }
         .lesson-title {
-          font-size: 2.8rem;
+          font-size: 3rem;
           font-weight: 900;
           margin-bottom: 1.5rem;
           text-transform: uppercase;
           letter-spacing: 0.1em;
         }
         .lesson-text {
-          font-size: 1.4rem;
+          font-size: 1.8rem;
           max-width: 800px;
           line-height: 1.6;
           color: #fff;
@@ -240,7 +240,7 @@ export default function GearOfEra() {
           text-align: center;
         }
         .game-desc {
-          font-size: 1.2rem;
+          font-size: 2rem;
           max-width: 800px;
           line-height: 1.6;
           margin-bottom: 2rem;

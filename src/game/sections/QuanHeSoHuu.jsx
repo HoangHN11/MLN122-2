@@ -10,12 +10,12 @@ const LucideIcon = ({ name, className = "" }) => {
   };
 
   return (
-    <svg 
-      xmlns="http://www.w3.org/2000/svg" 
-      width="32" height="32" 
-      viewBox="0 0 24 24" 
-      fill="none" stroke="currentColor" 
-      strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" 
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="32" height="32"
+      viewBox="0 0 24 24"
+      fill="none" stroke="currentColor"
+      strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
       className={className}
     >
       {icons[name] || <circle cx="12" cy="12" r="10" />}
@@ -23,18 +23,7 @@ const LucideIcon = ({ name, className = "" }) => {
   );
 };
 
-const phanPhoiDauVao = [
-  { id: 1, icon: 'mountain', text: 'Đất đai' },
-  { id: 2, icon: 'banknote', text: 'Vốn' },
-  { id: 3, icon: 'bookOpen', text: 'Giáo dục' },
-  { id: 4, icon: 'briefcase', text: 'Việc làm' }
-];
-
-const phanPhoiDauRa = [
-  { id: 1, icon: 'hardHat', text: 'Lao động', subtext: '(tiền lương)' },
-  { id: 2, icon: 'trendingUp', text: 'Vốn', subtext: '(lợi nhuận)' },
-  { id: 3, icon: 'shieldPlus', text: 'An sinh xã hội', subtext: '(phúc lợi)' }
-];
+// Removed manual data arrays as they were replaced by images
 
 export default function QuanHeSoHuu() {
   return (
@@ -43,7 +32,7 @@ export default function QuanHeSoHuu() {
       <section id="quan-he-so-huu" className="slide-section">
         <div className="slide-inner page-section">
           <h2 style={{ fontFamily: "'Outfit', sans-serif", fontSize: '2.2rem', fontWeight: 800, color: '#c62828', textTransform: 'uppercase', marginBottom: '1.5rem', lineHeight: 1.3 }}>
-            B) VỀ QUAN HỆ SỞ HỮU VÀ THÀNH<br/>PHẦN KINH TẾ
+            B) VỀ QUAN HỆ SỞ HỮU VÀ THÀNH<br />PHẦN KINH TẾ
           </h2>
 
           <div className="vh-grid">
@@ -58,7 +47,7 @@ export default function QuanHeSoHuu() {
                   (Giáo trình Kinh tế chính trị Mác – Lênin, 2021, tr. 160)
                 </p>
               </div>
-              
+
               <div className="vh-bullets-section" style={{ marginTop: '0' }}>
                 <h4 style={{ fontFamily: "'Outfit', sans-serif", fontSize: '1.25rem', fontWeight: 700, color: '#d34315', marginBottom: '0.8rem' }}>
                   Sở hữu gồm 3 yếu tố:
@@ -79,9 +68,9 @@ export default function QuanHeSoHuu() {
             </div>
 
             <div className="vh-image-col">
-              <img 
-                src="https://phunuvietnam.mediacdn.vn/media/news/f138f73e751c5c28f821e5ffb382e813/ktcs.jpg" 
-                alt="Quan hệ sở hữu và thành phần kinh tế" 
+              <img
+                src="https://phunuvietnam.mediacdn.vn/media/news/f138f73e751c5c28f821e5ffb382e813/ktcs.jpg"
+                alt="Quan hệ sở hữu và thành phần kinh tế"
                 className="vh-image"
                 style={{ borderRadius: '24px' }}
               />
@@ -100,17 +89,17 @@ export default function QuanHeSoHuu() {
             <div className="nd-grid">
               <div className="nd-col">
                 <div className="nd-badge">VỀ NỘI DUNG KINH TẾ</div>
-                <img 
-                  src="https://tapchikinhtetaichinh.vn/stores/news_dataimages/kttc/2025/10/23/on-dinh-kinh-te-vi-mo-nen-tang-cho-tang-truong-ben-vung-giai-doan-moi-fe31b5379ac3.png" 
-                  alt="Nội dung kinh tế" 
+                <img
+                  src="https://tapchikinhtetaichinh.vn/stores/news_dataimages/kttc/2025/10/23/on-dinh-kinh-te-vi-mo-nen-tang-cho-tang-truong-ben-vung-giai-doan-moi-fe31b5379ac3.png"
+                  alt="Nội dung kinh tế"
                   className="nd-image"
                 />
               </div>
               <div className="nd-col">
                 <div className="nd-badge">VỀ NỘI DUNG PHÁP LÝ</div>
-                <img 
-                  src="https://cdn.thuvienphapluat.vn/uploads/Hoidapphapluat/2023/VTLA/231027/trach-nhiem-phap-ly.jpg" 
-                  alt="Nội dung pháp lý" 
+                <img
+                  src="https://cdn.thuvienphapluat.vn/uploads/Hoidapphapluat/2023/VTLA/231027/trach-nhiem-phap-ly.jpg"
+                  alt="Nội dung pháp lý"
                   className="nd-image"
                 />
               </div>
@@ -140,9 +129,9 @@ export default function QuanHeSoHuu() {
 
             <div className="ql-image-container" style={{ marginTop: '-3rem' }}>
               <div className="ql-img-wrapper">
-                <img 
-                  src="https://sf-static.upanhlaylink.com/img/image_20260422a33c0ac44ebd09a9aadaa9271cd73a30.jpg" 
-                  alt="Quản lý nền kinh tế" 
+                <img
+                  src="https://sf-static.upanhlaylink.com/img/image_20260422a33c0ac44ebd09a9aadaa9271cd73a30.jpg"
+                  alt="Quản lý nền kinh tế"
                 />
               </div>
             </div>
@@ -160,43 +149,32 @@ export default function QuanHeSoHuu() {
                   <span className="pp-dot red"></span>
                   <span className="pp-dot black"></span>
                 </div>
-                <h1 className="pp-main-title">D.<br/>QUAN HỆ PHÂN PHỐI</h1>
+                <h1 className="pp-main-title">D.<br />QUAN HỆ PHÂN PHỐI</h1>
                 <p className="pp-sub-title">TRONG KINH TẾ THỊ TRƯỜNG ĐỊNH HƯỚNG XHCN</p>
               </div>
-              
+
               <div className="pp-desc-col">
                 <div className="pp-desc-pill">
-                  Phân phối là cách xã hội chia nguồn lực và chia kết quả làm ra cho các chủ thể khác nhau.
+                  <strong>Phân phối là cách xã hội chia nguồn lực và chia kết quả làm ra cho các chủ thể khác nhau.</strong>
                 </div>
               </div>
             </div>
 
-            <div className="pp-cards-row" style={{ marginTop: '-3rem' }}>
-              <div className="pp-card">
-                <h3 className="pp-card-title">PHÂN PHỐI ĐẦU VÀO</h3>
-                <ul className="pp-card-list">
-                  {phanPhoiDauVao.map((item) => (
-                    <li key={item.id}>
-                      <div className="pp-icon"><LucideIcon name={item.icon} /></div>
-                      <div className="pp-text">{item.text}</div>
-                    </li>
-                  ))}
-                </ul>
+            <div className="pp-cards-row" style={{ marginTop: '-2rem' }}>
+              <div className="pp-image-box">
+                <img
+                  src="https://sf-static.upanhlaylink.com/img/image_202604234d6526d8626bac646513706778eb1f9a.jpg"
+                  alt="Phân phối đầu vào"
+                  className="pp-main-img"
+                />
               </div>
 
-              <div className="pp-card">
-                <h3 className="pp-card-title">PHÂN PHỐI ĐẦU RA</h3>
-                <ul className="pp-card-list">
-                  {phanPhoiDauRa.map((item) => (
-                    <li key={item.id}>
-                      <div className="pp-icon"><LucideIcon name={item.icon} /></div>
-                      <div className="pp-text">
-                        <span>{item.text}</span>
-                        <span className="pp-sub">{item.subtext}</span>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
+              <div className="pp-image-box right">
+                <img
+                  src="https://sf-static.upanhlaylink.com/img/image_20260423a215b87ceeeffa3446be19353cd805ff.jpg"
+                  alt="Phân phối đầu ra"
+                  className="pp-main-img"
+                />
               </div>
             </div>
           </div>
@@ -205,15 +183,90 @@ export default function QuanHeSoHuu() {
 
       {/* Slide: Ví dụ thực tiễn (phân phối) */}
       <section id="vi-du-phan-phoi" className="slide-section">
-        <div className="slide-inner page-section" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '-2.5rem' }}>
-          <h2 style={{ fontFamily: "'Outfit', sans-serif", fontSize: '2.5rem', fontWeight: 900, color: '#c62828', textTransform: 'uppercase', marginBottom: '1.5rem', textAlign: 'center' }}>
-            VÍ DỤ THỰC TIỄN
-          </h2>
-          <div style={{ width: '100%', maxWidth: '1000px', marginTop: '-1.5rem' }}>
-            <img 
-              src="/images/image_20260422afa31b1b578d49759a0495634978ad1c.jpg" 
-              alt="Ví dụ thực tiễn" 
-              style={{ width: '100%', display: 'block', mixBlendMode: 'multiply', opacity: 0.95 }}
+        <div className="slide-inner page-section" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '-3rem' }}>
+          <div className="vdpp-header">
+            <div className="vdpp-badge">
+              <h3>ĐẦU VÀO</h3>
+            </div>
+          </div>
+
+          <div className="vdpp-subtitle-bar">
+            <p className="vdpp-subtitle-text">
+              sinh viên ở thành phố và sinh viên ở nông thôn đều có thể tiếp cận cơ hội.
+            </p>
+          </div>
+
+          <div className="vdpp-image-row">
+            <div className="vdpp-img-left">
+              <img
+                src="https://huongnghiepcdm.edu.vn/wp-content/uploads/2024/06/sinh-vien-truong-dai-hoc-thuong-mai-2.jpg"
+                alt="Sinh viên thành phố"
+              />
+            </div>
+
+            <div className="vdpp-icon-center">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/4298/4298288.png"
+                alt="Education icon"
+              />
+            </div>
+
+            <div className="vdpp-img-right">
+              <img
+                src="https://ctsv.ntt.edu.vn/wp-content/uploads/2023/07/Moi-nam-ty-le-thi-sinh-nhap-hoc-theo-phuong-thuc-xet-tuyen-hoc-ba-THPT-luon-o-muc-cao-1536x1024-1.jpg"
+                alt="Sinh viên nông thôn"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Slide: Ví dụ thực tiễn (Đầu ra) */}
+      <section id="vi-du-dau-ra" className="slide-section">
+        <div className="slide-inner page-section" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '-3rem' }}>
+          <div className="vdpp-header">
+            <div className="vdpp-badge">
+              <h3>ĐẦU RA</h3>
+            </div>
+          </div>
+
+          <div className="vdo-grid">
+            <div className="vdo-card">
+              <div className="vdo-img-box">
+                <img src="https://th.bing.com/th/id/R.7a88c52f1153304bd13cf054d6c11f1c?rik=ZgS84j%2fn4w9EyQ&riu=http%3a%2f%2fwww.tapchicongsan.org.vn%2fdocuments%2f20182%2f439360%2fnang-chat-luong-nhan-luc-det-may.jpg%2f0ac5530e-5f31-4ef2-8f75-b6a754ebc0c3%3ft%3d1564624644306&ehk=uWO%2fOGePQwNUzW2nbL12B3VrXD0XaEsfZyV%2bAYDhqXg%3d&risl=&pid=ImgRaw&r=0" alt="Công nhân" />
+              </div>
+              <div className="vdo-label-bar">
+                <div className="vdo-label-title">Công nhân</div>
+                <div className="vdo-label-sub">Lương theo công suất</div>
+              </div>
+            </div>
+
+            <div className="vdo-card">
+              <div className="vdo-img-box">
+                <img src="https://media.istockphoto.com/id/1422431256/photo/successful-business-people-shaking-hands-businesspeople-handshake-for-teamwork-of-business.jpg?s=170667a&w=0&k=20&c=qZ6CHNPcrh3yYVui5ejy2sVM4l2mniAEWxcR2ApCYQk=" alt="Nhà đầu tư" />
+              </div>
+              <div className="vdo-label-bar">
+                <div className="vdo-label-title">Nhà đầu tư</div>
+                <div className="vdo-label-sub">Lợi nhuận theo vốn góp</div>
+              </div>
+            </div>
+
+            <div className="vdo-card">
+              <div className="vdo-img-box">
+                <img src="https://images2.thanhnien.vn/Uploaded/dieutrangqc/2022_12_06/anh-trao-so-the-bhxh-2159.jpg" alt="Người khó khăn" />
+              </div>
+              <div className="vdo-label-bar">
+                <div className="vdo-label-title">Người khó khăn</div>
+                <div className="vdo-label-sub">BHYT, học bổng, trợ cấp</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="vdo-illustration-container">
+            <img
+              src="https://sf-static.upanhlaylink.com/img/image_20260423e83811ce242ab9384fd6bd08098bfcd1.jpg"
+              alt="Ví dụ gần gũi"
+              className="vdo-illustration-img"
             />
           </div>
         </div>
@@ -227,12 +280,53 @@ export default function QuanHeSoHuu() {
               Đ) QUAN HỆ GIỮA GẮN TĂNG TRƯỞNG KINH TẾ<br />VỚI CÔNG BẰNG XÃ HỘI
             </h2>
           </div>
-          <div style={{ width: '80%', maxWidth: '1050px' }}>
-            <img 
-              src="/images/image_20260422f88807f56ec214c80bfa2eb8cbdfa555.jpg" 
-              alt="Quan hệ giữa gắn tăng trưởng kinh tế với công bằng xã hội" 
+          <div style={{ width: '100%', maxWidth: '1050px' }}>
+            <img
+              src="/images/image_20260422f88807f56ec214c80bfa2eb8cbdfa555.jpg"
+              alt="Quan hệ giữa gắn tăng trưởng kinh tế với công bằng xã hội"
               style={{ width: '100%', display: 'block', mixBlendMode: 'multiply', opacity: 0.95 }}
             />
+          </div>
+        </div>
+      </section>
+ 
+      {/* Slide: Mục tiêu */}
+      <section id="muc-tieu-tang-truong" className="slide-section">
+        <div className="slide-inner page-section" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '-3rem' }}>
+          <div className="mt-badge">
+            <h3>MỤC TIÊU</h3>
+          </div>
+
+          <div className="mt-items-box">
+            <div className="mt-item">
+              <div className="mt-icon">
+                <img src="https://sf-static.upanhlaylink.com/img/image_20260423c2c4e65acb7cd4ac976675f6e4691457.jpg" alt="Phát triển bền vững" />
+              </div>
+              <div className="mt-text">Phát triển<br/>bền vững</div>
+            </div>
+
+            <div className="mt-item">
+              <div className="mt-icon">
+                <img src="https://sf-static.upanhlaylink.com/img/image_20260423213ff5b70c860e9dfd0a7d802f029ef4.jpg" alt="Hài hòa" />
+              </div>
+              <div className="mt-text">Hài hòa</div>
+            </div>
+
+            <div className="mt-item">
+              <div className="mt-icon">
+                <img src="https://sf-static.upanhlaylink.com/img/image_20260423721577790ac7efb82a3fad78ad38d2b3.jpg" alt="Nhân văn" />
+              </div>
+              <div className="mt-text">Nhân văn</div>
+            </div>
+          </div>
+
+          <div className="mt-footer-box">
+            <div className="mt-footer-text">
+              “THỰC HIỆN TIẾN BỘ VÀ CÔNG BẰNG XÃ HỘI NGAY TRONG TỪNG CHÍNH SÁCH”
+            </div>
+            <div className="mt-source">
+              (Giáo trình Kinh tế chính trị Mác – Lênin, 2021, tr. 167)
+            </div>
           </div>
         </div>
       </section>
@@ -241,10 +335,37 @@ export default function QuanHeSoHuu() {
       <section id="vi-du-tang-truong" className="slide-section">
         <div className="slide-inner page-section" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <div style={{ width: '100%', maxWidth: '1050px', borderRadius: '12px', boxShadow: '0 8px 30px rgba(0,0,0,0.08)', overflow: 'hidden' }}>
-            <img 
-              src="/images/image_202604226d725fff4b80e351bf6f8de7dd38c87e.jpg" 
-              alt="Ví dụ thực tiễn phần Đ" 
+            <img
+              src="/images/image_202604226d725fff4b80e351bf6f8de7dd38c87e.jpg"
+              alt="Ví dụ thực tiễn phần Đ"
               style={{ width: '100%', display: 'block' }}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Slide: Mind Map Chương 5.1 - 5.1.3 */}
+      <section id="mind-map-chuong-5" className="slide-section">
+        <div className="slide-inner page-section" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={{ width: '90%', maxWidth: '1025px', marginBottom: '1rem' }}>
+            <h2 style={{
+              fontFamily: "'Outfit', sans-serif",
+              fontSize: 'clamp(1.8rem, 4vw, 3rem)',
+              fontWeight: 900,
+              color: '#c62828',
+              textTransform: 'uppercase',
+              textAlign: 'center',
+              marginTop: '2rem',
+              letterSpacing: '0.02em',
+            }}>
+              Mind Map Chương 5.1 – 5.1.3
+            </h2>
+          </div>
+          <div style={{ width: '90%', maxWidth: '1200px', marginTop: '-1.8rem' }}>
+            <img
+              src="https://sf-static.upanhlaylink.com/img/image_20260423e9b30f746f8d1a85a5490a66a315aeea.jpg"
+              alt="Mind Map Chương 5.1 - 5.1.3"
+              style={{ width: '100%', display: 'block', mixBlendMode: 'multiply' }}
             />
           </div>
         </div>

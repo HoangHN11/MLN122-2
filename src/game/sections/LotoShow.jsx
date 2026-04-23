@@ -415,11 +415,20 @@ export default function LotoShow() {
                     <div className="loto-options">
                       {currentQuestion.options.map((option, idx) => {
                         const isPicked = selectedOption === idx;
+                        const isCorrect = feedback && feedback.isCorrect && idx === currentQuestion.correctIndex;
+                        const isWrong = feedback && !feedback.isCorrect && isPicked;
+
+                        let optionClass = "loto-option";
+                        if (isPicked) optionClass += " picked";
+                        if (isCorrect) optionClass += " correct";
+                        if (isWrong) optionClass += " wrong";
+
                         return (
                           <button
                             key={option}
-                            className={`loto-option ${isPicked ? "picked" : ""}`}
-                            onClick={() => setSelectedOption(idx)}
+                            className={optionClass}
+                            onClick={() => !feedback && setSelectedOption(idx)}
+                            disabled={!!feedback}
                           >
                             <span>{LABELS[idx]}.</span>
                             <span>{option}</span>
@@ -437,13 +446,16 @@ export default function LotoShow() {
                         placeholder="Nhập đáp án"
                         value={textAnswer}
                         onChange={(e) => setTextAnswer(e.target.value)}
+                        disabled={!!feedback}
                       />
                     </div>
                   )}
 
-                  <button className="loto-btn submit" onClick={submitAnswer}>
-                    Chốt đáp án
-                  </button>
+                  {!feedback && (
+                    <button className="loto-btn submit" onClick={submitAnswer}>
+                      Chốt đáp án
+                    </button>
+                  )}
                 </div>
               )}
 
@@ -454,7 +466,7 @@ export default function LotoShow() {
                   <p>
                     {feedback.isCorrect
                       ? "Chính xác! Ô này đã được mở thành công."
-                      : `Sai rồi! Đáp án đúng là ${feedback.answerText}. Ô này đã bị khóa màu xám.`}
+                      : "Sai rồi! Chúc bạn may mắn lần sau. Ô này đã bị khóa màu xám."}
                   </p>
                   {!isGameOver && (
                     <button className="loto-btn next" onClick={nextRound}>

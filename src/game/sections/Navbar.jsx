@@ -22,20 +22,36 @@ export default function Navbar({ activeTab, onTabChange }) {
       return;
     }
 
+    // Theory section IDs from both KinhTeThiTruong and QuanHeSoHuu
+    const THEORY_SECTION_IDS = [
+      'ton-tai', 'tat-yeu', 'van-hoa', 'diem-khac-biet', 'ly-do',
+      'quan-he-so-huu', 'noi-dung-so-huu', 'quan-ly-kinh-te',
+      'quan-he-phan-phoi', 'vi-du-phan-phoi', 'vi-du-dau-ra',
+      'tang-truong-cong-bang', 'muc-tieu-tang-truong', 'vi-du-tang-truong',
+      'mind-map-chuong-5',
+    ];
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          setActive('#' + entry.target.id);
+          const id = entry.target.id;
+          // All theory sections map to #ton-tai nav link
+          if (THEORY_SECTION_IDS.includes(id)) {
+            setActive('#ton-tai');
+          } else {
+            setActive('#' + id);
+          }
         }
       });
     }, { root: null, rootMargin: '-20% 0px -60% 0px', threshold: 0 });
 
-    const sections = ['hero', 'ton-tai', 'loto', 'quiz']
+    const rootSections = ['hero', 'loto', 'quiz'];
+    const allSections = [...rootSections, ...THEORY_SECTION_IDS]
       .map(id => document.getElementById(id))
       .filter(el => el !== null);
       
-    sections.forEach(sec => observer.observe(sec));
-    return () => sections.forEach(sec => observer.unobserve(sec));
+    allSections.forEach(sec => observer.observe(sec));
+    return () => allSections.forEach(sec => observer.unobserve(sec));
   }, [activeTab]);
 
   const handleNavClick = (e, href) => {
