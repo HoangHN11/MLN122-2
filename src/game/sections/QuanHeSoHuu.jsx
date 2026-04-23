@@ -358,10 +358,10 @@ export default function QuanHeSoHuu() {
               marginTop: '2rem',
               letterSpacing: '0.02em',
             }}>
-              Mind Map Chương 5.1 – 5.1.3
+              Mind Map 5.1.3
             </h2>
           </div>
-          <div style={{ width: '90%', maxWidth: '1200px', marginTop: '-1.8rem' }}>
+          <div style={{ width: '80%', maxWidth: '1100px' }}>
             <img
               src="https://sf-static.upanhlaylink.com/img/image_20260423e9b30f746f8d1a85a5490a66a315aeea.jpg"
               alt="Mind Map Chương 5.1 - 5.1.3"

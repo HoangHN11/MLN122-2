@@ -24,7 +24,7 @@ export default function Navbar({ activeTab, onTabChange }) {
 
     // Theory section IDs from both KinhTeThiTruong and QuanHeSoHuu
     const THEORY_SECTION_IDS = [
-      'ton-tai', 'tat-yeu', 'van-hoa', 'diem-khac-biet', 'ly-do',
+      'ton-tai', 'tat-yeu', 'mind-map-5-1-2', 'van-hoa', 'diem-khac-biet', 'ly-do',
       'quan-he-so-huu', 'noi-dung-so-huu', 'quan-ly-kinh-te',
       'quan-he-phan-phoi', 'vi-du-phan-phoi', 'vi-du-dau-ra',
       'tang-truong-cong-bang', 'muc-tieu-tang-truong', 'vi-du-tang-truong',

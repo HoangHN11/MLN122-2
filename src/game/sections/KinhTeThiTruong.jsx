@@ -91,6 +91,31 @@ export default function KinhTeThiTruong() {
         </div>
       </section>
 
+      {/* Mind Map 5.1.2 */}
+      <section id="mind-map-5-1-2" className="slide-section">
+        <div className="slide-inner page-section" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <h2 style={{
+            fontFamily: "'Outfit', sans-serif",
+            fontSize: 'clamp(1.8rem, 4vw, 3rem)',
+            fontWeight: 900,
+            color: '#c62828',
+            textTransform: 'uppercase',
+            textAlign: 'center',
+            margin: '0 0 1rem 0',
+            letterSpacing: '0.02em',
+          }}>
+            Mind Map 5.1.2
+          </h2>
+          <div style={{ width: '80%', maxWidth: '1100px' }}>
+            <img
+              src="https://sf-static.upanhlaylink.com/img/image_202604238cd05cbe6067e51fa8716850b847ef82.jpg"
+              alt="Mind Map 5.1.2 - Tính tất yếu khách quan"
+              style={{ width: '100%', display: 'block', mixBlendMode: 'multiply' }}
+            />
+          </div>
+        </div>
+      </section>
+
       {/* 5.1.3 Đặc trưng (A) */}
       <section id="van-hoa" className="slide-section">
         <div className="slide-inner page-section">
@@ -141,7 +166,7 @@ export default function KinhTeThiTruong() {
       <section id="diem-khac-biet" className="slide-section">
         <div className="slide-inner page-section" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
           <h2 className="dkb-title" style={{ marginBottom: '1.5rem', textAlign: 'center' }}>ĐIỂM KHÁC BIỆT QUAN TRỌNG</h2>
-          <div className="dkb-image-container" style={{ width: '100%', maxWidth: '750px', margin: '0 auto' }}>
+          <div className="dkb-image-container" style={{ width: '100%', maxWidth: '900px', margin: '0 auto' }}>
             <img 
               src="https://imgs.vietnamnet.vn/Images/vnn/2015/06/23/15/20150623152526-hoptacvietmy.jpg?width=0&s=tcdL3SQEdv2o2k4O0xnW0Q" 
               alt="Điểm khác biệt quan trọng" 
