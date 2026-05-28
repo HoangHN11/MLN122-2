@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 
 const NAV_LINKS = [
-  { href: "#hero", label: "Home" },
+  { href: "#home", label: "Home" },
   { href: "#ton-tai", label: "Học Thuyết" },
   { href: "#loto", label: "Lô Tô" },
   { href: "#ai", label: "AI Usage" },
 ];
 
 export default function Navbar({ activeTab, onTabChange }) {
-  const [active, setActive] = useState("#hero");
+  const [active, setActive] = useState("#home");
 
   useEffect(() => {
     // Only observe scroll if we are on the game tab
@@ -55,7 +55,7 @@ export default function Navbar({ activeTab, onTabChange }) {
       { root: null, rootMargin: "-20% 0px -60% 0px", threshold: 0 },
     );
 
-    const rootSections = ["hero", "loto"];
+    const rootSections = ["home", "loto"];
     const allSections = [...rootSections, ...THEORY_SECTION_IDS]
       .map((id) => document.getElementById(id))
       .filter((el) => el !== null);

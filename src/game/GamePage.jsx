@@ -1,12 +1,11 @@
-import { useEffect } from "react";
-import Navbar from "./sections/Navbar";
 import Hero from "./sections/Hero";
 import GiaiCap from "./sections/GiaiCap";
 import DauTranhGiaiCap from "./sections/DauTranhGiaiCap";
 import DauTranhGiaiCapVoSan from "./sections/DauTranhGiaiCapVoSan";
+import LotoShow from "./sections/LotoShow";
+import TableOfContents from "./sections/TableOfContents";
 
 import useScrollReveal from "../hooks/useScrollReveal";
-import LotoShow from "./sections/LotoShow";
 
 export const GamePage = () => {
   useScrollReveal();
@@ -23,6 +22,7 @@ export const GamePage = () => {
       }}
     >
       <style>{`.theory-page-container::-webkit-scrollbar { display: none; }`}</style>
+      <TableOfContents />
       <Hero />
 
       <GiaiCap />

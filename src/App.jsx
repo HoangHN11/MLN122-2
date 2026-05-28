@@ -36,14 +36,19 @@ function App() {
   };
 
   return (
-    <div
-      style={{
-        width: "100%",
-        minHeight: "100vh",
-        position: "relative",
-        overflowX: "hidden",
-      }}
-    >
+    <div className="app-shell">
+      <div className="site-bg" aria-hidden="true">
+        <video
+          className="site-bg-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+        >
+          <source src="/background.mp4" type="video/mp4" />
+        </video>
+        <div className="site-bg-overlay" />
+      </div>
       <Navbar activeTab={activeTab} onTabChange={handleTabChange} />
       {/* Tab Content */}
       <div style={{ width: "100%", minHeight: "100vh" }}>

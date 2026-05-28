@@ -6,7 +6,35 @@
 #root {
   width: 100%;
   min-height: 100vh;
-  background: #ede8e1;
+  background: transparent;
+}
+
+.app-shell {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  z-index: 0;
+}
+
+.site-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.site-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.site-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.22);
 }
 
 html,
@@ -242,9 +270,9 @@ h3 {
 
 .navbar-theory {
   position: relative;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  background: rgba(232, 238, 246, 0.92);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -252,8 +280,8 @@ h3 {
   height: auto;
   width: auto;
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(186, 201, 219, 0.8);
+  box-shadow: 0 10px 28px rgba(21, 52, 96, 0.12);
 }
 
 .navbar-brand .brand-icon {
@@ -270,24 +298,24 @@ h3 {
 
 /* ── Navbar Gray Mode (when scrolled past hero) ── */
 .navbar-theory.nav-gray {
-  background: #96918a !important;
-  border-color: rgba(0, 0, 0, 0.05) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+  background: rgba(227, 234, 244, 0.96) !important;
+  border-color: rgba(186, 201, 219, 0.85) !important;
+  box-shadow: 0 8px 24px rgba(21, 52, 96, 0.12) !important;
 }
 
 .navbar-theory.nav-gray .navbar-nav a {
-  color: rgba(255, 255, 255, 0.8) !important;
+  color: #0b57a3 !important;
 }
 
 .navbar-theory.nav-gray .navbar-nav a:hover {
-  background: rgba(255, 255, 255, 0.15) !important;
-  color: #fff !important;
+  background: rgba(11, 87, 163, 0.1) !important;
+  color: #0b57a3 !important;
 }
 
 .navbar-theory.nav-gray .navbar-nav a.active {
-  background: #fff !important;
-  color: #000 !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+  background: #ffffff !important;
+  color: #0b57a3 !important;
+  box-shadow: 0 6px 16px rgba(21, 52, 96, 0.12) !important;
 }
 
 .navbar-nav {
@@ -299,7 +327,7 @@ h3 {
 
 .navbar-nav a {
   display: block;
-  color: rgba(255, 255, 255, 0.75);
+  color: #0b57a3;
   text-decoration: none;
   font-size: 0.85rem;
   font-weight: 500;
@@ -313,14 +341,189 @@ h3 {
 }
 
 .navbar-nav a:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background: rgba(11, 87, 163, 0.1);
+  color: #0b57a3;
 }
 
 .navbar-nav a.active {
-  background: #fff;
-  color: #000 !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  color: #0b57a3 !important;
+  box-shadow: 0 6px 16px rgba(21, 52, 96, 0.12);
+}
+
+/* ── Table of Contents (sticky glass card) ── */
+.toc-panel {
+  position: fixed;
+  top: 120px;
+  left: 32px;
+  width: 280px;
+  max-height: calc(100vh - 180px);
+  overflow: hidden;
+  z-index: 80;
+  border-radius: 20px;
+  padding: 18px 18px 14px 18px;
+  background: rgba(232, 238, 246, 0.92);
+  border: 1px solid rgba(186, 201, 219, 0.85);
+  box-shadow: 0 18px 40px rgba(21, 52, 96, 0.18);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.toc-panel.is-hidden {
+  transform: translateX(-120%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.toc-toggle {
+  position: fixed;
+  top: 74px;
+  left: 32px;
+  z-index: 90;
+  padding: 8px 14px;
+  border-radius: 9999px;
+  border: 1px solid rgba(186, 201, 219, 0.85);
+  background: rgba(232, 238, 246, 0.96);
+  color: #0b57a3;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  box-shadow: 0 10px 28px rgba(21, 52, 96, 0.12);
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.toc-toggle:hover {
+  background: rgba(232, 238, 246, 1);
+  transform: translateY(-1px);
+}
+
+.toc-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(186, 201, 219, 0.6);
+}
+
+.toc-chip {
+  width: fit-content;
+  padding: 4px 10px;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #0b57a3;
+  background: rgba(11, 87, 163, 0.08);
+  border-radius: 9999px;
+  font-weight: 600;
+}
+
+.toc-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0b57a3;
+}
+
+.toc-subtitle {
+  font-size: 0.85rem;
+  color: rgba(11, 87, 163, 0.75);
+}
+
+.toc-nav {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: auto;
+  padding-right: 4px;
+  max-height: calc(100vh - 260px);
+}
+
+.toc-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #0b57a3;
+  font-size: 0.9rem;
+  padding: 6px 8px;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+}
+
+.toc-link:hover {
+  background: rgba(11, 87, 163, 0.1);
+  transform: translateX(2px);
+}
+
+.toc-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: #0b57a3;
+  flex-shrink: 0;
+}
+
+.toc-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.toc-group-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: #0b57a3;
+  font-weight: 600;
+  padding: 6px 8px;
+  border-radius: 10px;
+  background: rgba(11, 87, 163, 0.06);
+  list-style: none;
+}
+
+.toc-group-title::-webkit-details-marker {
+  display: none;
+}
+
+.toc-group-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  border: 2px solid rgba(11, 87, 163, 0.8);
+  flex-shrink: 0;
+}
+
+.toc-group-items {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-left: 8px;
+}
+
+@media (max-width: 1100px) {
+  .toc-panel {
+    position: static;
+    width: auto;
+    max-height: none;
+    margin: 18px 18px 0 18px;
+  }
+
+  .toc-panel.is-hidden {
+    display: none;
+  }
+
+  .toc-toggle {
+    position: fixed;
+    top: 72px;
+    left: 18px;
+  }
+
+  .toc-nav {
+    max-height: none;
+  }
 }
 
 .navbar-progress {
@@ -337,6 +540,23 @@ h3 {
   align-items: center;
   overflow: hidden;
   background: #0d0705;
+}
+
+/* ── Home Slide (full page image) ── */
+.home-slide {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+.home-slide-image {
+  width: 100%;
+  height: 100vh;
+  object-fit: contain;
+  display: block;
 }
 
 /* Background painting – image set via inline style in JSX */
