@@ -31,8 +31,7 @@ export const AIUsagePage = () => {
   return (
     <div className="w-full min-h-screen bg-[#dce9f8] text-blue-950 pt-32 pb-24 px-6 md:px-12 relative overflow-hidden flex justify-center">
       <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(180deg,#eef6ff_0%,#dce9f8_42%,#c7daf3_100%)]" />
-      <div className="absolute inset-x-0 top-0 h-56 pointer-events-none bg-[#f4f9ff]" />
-      <div className="absolute left-1/2 top-24 h-[760px] w-[min(1180px,88vw)] -translate-x-1/2 rounded-[36px] border border-blue-200 bg-[#edf5ff] shadow-[0_28px_90px_rgba(15,45,105,0.22)] pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-56 pointer-events-none bg-[#eef6ff]" />
       <div className="max-w-[1000px] w-full relative z-10">
         
         {/* Part 3: Tool Breakdown */}
