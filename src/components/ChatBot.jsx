@@ -221,7 +221,7 @@ export default function ChatBot() {
               <div className="cb-welcome-icon">🤖</div>
               <h4>Xin chào!</h4>
               <p>
-                Tôi là trợ lý AI hỗ trợ môn học MLN122. Bạn có thể hỏi tôi bất kỳ
+                Tôi là trợ lý AI hỗ trợ môn học MLN111. Bạn có thể hỏi tôi bất kỳ
                 câu hỏi nào về nội dung bài học.
               </p>
             </div>

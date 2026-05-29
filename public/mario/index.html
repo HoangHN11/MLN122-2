@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mario giải cứu công chúa</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="home-active">
+  <section class="home-screen" id="homeScreen" aria-label="Trang chủ">
+    <div class="home-card">
+      <span class="home-badge">EXE101</span>
+      <h1>Mario giải cứu công chúa</h1>
+      <p>Vượt qua 5 căn phòng câu hỏi về chủ nghĩa duy vật lịch sử để giải cứu công chúa.</p>
+      <label class="player-field" for="playerNameInput">
+        <span>Tên người chơi</span>
+        <input id="playerNameInput" type="text" maxlength="24" placeholder="Nhập tên của bạn">
+      </label>
+      <button id="startButton" type="button" class="start-button">Bắt đầu</button>
+      <section class="home-rank" aria-label="Bảng xếp hạng">
+        <h2>Bảng xếp hạng</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Hạng</th>
+              <th>Tên</th>
+              <th>Thời gian</th>
+            </tr>
+          </thead>
+          <tbody id="homeRankBody"></tbody>
+        </table>
+        <div class="rank-tools">
+          <button id="resetRankButton" type="button" class="admin-reset">Admin reset bảng</button>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <main class="game-shell">
+    <section class="stage" id="stage" aria-label="Khu vực chơi">
+      <div class="sky">
+        <div class="cloud cloud-one"></div>
+        <div class="cloud cloud-two"></div>
+        <div class="sun"></div>
+      </div>
+
+      <div class="hud" aria-label="Thông tin trò chơi">
+        <div>
+          <span class="hud-label">Phòng</span>
+          <strong id="roomText">1 / 5</strong>
+        </div>
+        <div>
+          <span class="hud-label">Câu hỏi</span>
+          <strong id="questionText">1 / 2</strong>
+        </div>
+        <div>
+          <span class="hud-label">Thời gian</span>
+          <strong id="timerText">0:00</strong>
+        </div>
+        <div>
+          <span class="hud-label">Mạng</span>
+          <strong id="livesText" class="lives">♥ ♥ ♥ ♥ ♥</strong>
+        </div>
+      </div>
+
+      <div class="level-track">
+        <div class="room-status" aria-label="Trạng thái trong phòng">
+          <span id="roomProgressText">Phòng 1 · Câu 1</span>
+          <strong id="roomTimerText" class="room-time">0:00</strong>
+          <strong id="roomLivesText">♥ ♥ ♥ ♥ ♥</strong>
+        </div>
+        <div class="room-scene" id="roomScene" aria-hidden="true">
+          <div class="scene-label" id="sceneLabel"></div>
+          <div class="scene-prop prop-one"></div>
+          <div class="scene-prop prop-two"></div>
+          <div class="scene-prop prop-three"></div>
+          <div class="scene-prop prop-four"></div>
+          <div class="scene-prop prop-five"></div>
+          <div class="scene-prop prop-six"></div>
+        </div>
+        <div class="rooms" id="rooms"></div>
+        <div class="mario" id="mario" aria-label="Mario">
+          <img src="assets/mario.jpeg" alt="Mario">
+          <div class="mario-model" aria-hidden="true">
+            <div class="model-shadow"></div>
+            <div class="model-leg leg-left"></div>
+            <div class="model-leg leg-right"></div>
+            <div class="model-body"></div>
+            <div class="model-arm arm-left"></div>
+            <div class="model-arm arm-right"></div>
+            <div class="model-head">
+              <div class="model-cap"></div>
+              <div class="model-eye eye-left"></div>
+              <div class="model-eye eye-right"></div>
+              <div class="model-nose"></div>
+              <div class="model-mustache"></div>
+            </div>
+          </div>
+        </div>
+        <div class="princess" id="princess" aria-label="Công chúa">
+          <img src="assets/princess-peach.jpg" alt="Công chúa">
+          <div class="princess-model" aria-hidden="true">
+            <div class="princess-shadow"></div>
+            <div class="princess-dress"></div>
+            <div class="princess-arm arm-princess-left"></div>
+            <div class="princess-arm arm-princess-right"></div>
+            <div class="princess-head">
+              <div class="princess-hair"></div>
+              <div class="princess-crown"></div>
+              <div class="princess-eye eye-princess-left"></div>
+              <div class="princess-eye eye-princess-right"></div>
+              <div class="princess-smile"></div>
+            </div>
+          </div>
+        </div>
+        <div class="bouquet" id="bouquet" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="castle" id="castle" aria-hidden="true">
+          <div class="tower tower-left"></div>
+          <div class="tower tower-right"></div>
+          <div class="castle-main"></div>
+          <div class="castle-door"></div>
+        </div>
+        <div class="fireworks" id="fireworks" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <div class="ground">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </section>
+
+    <section class="quiz-panel" aria-label="Câu hỏi">
+      <div class="topic-row">
+        <span>EXE101</span>
+        <span>Chủ nghĩa duy vật lịch sử</span>
+      </div>
+      <h1>Mario giải cứu công chúa</h1>
+      <p id="roomTitle" class="room-title"></p>
+      <h2 id="question"></h2>
+      <div id="answers" class="answers"></div>
+      <p id="feedback" class="feedback" aria-live="polite"></p>
+      <div class="actions">
+        <button id="nextButton" type="button" class="primary hidden">Tiếp tục</button>
+        <button id="restartButton" type="button" class="secondary">Chơi lại</button>
+      </div>
+      <section class="rank-panel hidden" id="endRankPanel" aria-label="Bảng xếp hạng sau lượt chơi">
+        <h3>Bảng xếp hạng</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Hạng</th>
+              <th>Tên</th>
+              <th>Thời gian</th>
+            </tr>
+          </thead>
+          <tbody id="endRankBody"></tbody>
+        </table>
+      </section>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

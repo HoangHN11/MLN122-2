@@ -45,7 +45,7 @@ function App() {
           loop
           playsInline
         >
-          <source src="/background.mp4" type="video/mp4" />
+          <source src="/website.mp4" type="video/mp4" />
         </video>
         <div className="site-bg-overlay" />
       </div>

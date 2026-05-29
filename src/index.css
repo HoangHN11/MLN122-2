@@ -4813,10 +4813,10 @@ h3 {
 ═══════════════════════════════════════════ */
 
 .slide-section {
-  /* Each section fills the viewport */
-  min-height: 100vh;
+  /* Web section spacing instead of full-screen slides */
+  min-height: auto;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
 
   /* Fallback: keep slides visible even if JS reveal doesn't run */
@@ -4827,9 +4827,10 @@ h3 {
     transform 0.75s cubic-bezier(0.22, 0.61, 0.36, 1);
 
   /* Padding for breathing room */
-  padding: 5rem 2rem;
+  padding: 4rem 2rem;
   box-sizing: border-box;
 }
+
 
 /* When IntersectionObserver adds .slide-in */
 .slide-section.slide-in {
@@ -4840,8 +4841,21 @@ h3 {
 /* Inner wrapper — constrain width like a slide canvas */
 .slide-inner {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1120px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Card framing for each section block */
+.slide-inner > div {
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(24, 58, 110, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 /* Stagger child elements for a cascading effect */
@@ -4946,8 +4960,12 @@ h3 {
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .slide-section {
-    padding: 3rem 1rem;
+    padding: 2.5rem 1rem;
     min-height: auto;
+  }
+
+  .slide-inner {
+    gap: 1.5rem;
   }
 }
 
