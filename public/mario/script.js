@@ -332,6 +332,7 @@ let gameStarted = false;
 let currentPlayer = "";
 let runStartTime = 0;
 let scoreSaved = false;
+let leaderboardSyncTimer = null;
 
 function createRooms() {
   rooms.forEach((_, index) => {
@@ -618,6 +619,16 @@ async function syncLeaderboard() {
   }
 }
 
+function startLeaderboardSync() {
+  if (leaderboardSyncTimer) return;
+  leaderboardSyncTimer = setInterval(syncLeaderboard, 5000);
+}
+
+function stopLeaderboardSync() {
+  clearInterval(leaderboardSyncTimer);
+  leaderboardSyncTimer = null;
+}
+
 function saveCurrentScore() {
   if (scoreSaved || !runStartTime) return null;
 
@@ -643,6 +654,7 @@ function saveCurrentScore() {
       renderLeaderboard(rows);
     });
   endRankPanel.classList.remove("hidden");
+  startLeaderboardSync();
   return elapsed;
 }
 
@@ -826,6 +838,7 @@ function finishGame() {
 
 function resetGame() {
   clearPendingTimers();
+  stopLeaderboardSync();
   if (gameStarted) {
     runStartTime = Date.now();
     scoreSaved = false;
@@ -846,6 +859,7 @@ function resetGame() {
 
 function returnToHome() {
   clearPendingTimers();
+  startLeaderboardSync();
   gameStarted = false;
   currentPlayer = "";
   runStartTime = 0;
@@ -893,6 +907,7 @@ restartButton.addEventListener("click", resetGame);
 resetRankButton.addEventListener("click", resetLeaderboardByAdmin);
 startButton.addEventListener("click", () => {
   if (gameStarted) return;
+  stopLeaderboardSync();
   gameStarted = true;
   currentPlayer = playerNameInput.value.trim() || "Người chơi";
   runStartTime = Date.now();
@@ -905,3 +920,4 @@ startButton.addEventListener("click", () => {
 
 createRooms();
 syncLeaderboard();
+startLeaderboardSync();
