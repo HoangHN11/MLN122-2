@@ -1,4 +1,4 @@
-const SLIDE_SRC = "/1.png";
+const SLIDE_SRC = "/home-chapter-3.jpg";
 
 export default function Hero() {
   return (
@@ -6,7 +6,7 @@ export default function Hero() {
       <img
         className="home-slide-image"
         src={SLIDE_SRC}
-        alt="Slide 1"
+        alt="Chủ nghĩa duy vật lịch sử - Giai cấp và dân tộc"
       />
     </section>
   );
