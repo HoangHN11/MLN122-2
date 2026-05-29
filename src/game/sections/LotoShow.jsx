@@ -15,8 +15,7 @@ const QUESTION_MAP = {
   1: {
     type: "mcq",
     title: "Câu 1",
-    question:
-      "Theo quan điểm của triết học Mác – Lênin, vận động là:",
+    question: "Theo quan điểm của triết học Mác – Lênin, vận động là:",
     options: [
       "Thuộc tính riêng của con người",
       "Phương thức tồn tại của vật chất",
@@ -30,12 +29,7 @@ const QUESTION_MAP = {
     title: "Câu 2",
     question:
       "Ai là người kế thừa và phát triển chủ nghĩa Mác trong thời đại đế quốc chủ nghĩa?",
-    options: [
-      "Ăngghen",
-      "Hồ Chí Minh",
-      "Lênin",
-      "Xtalin",
-    ],
+    options: ["Ăngghen", "Hồ Chí Minh", "Lênin", "Xtalin"],
     correctIndex: 2,
   },
   3: {
@@ -54,12 +48,7 @@ const QUESTION_MAP = {
     type: "mcq",
     title: "Câu 4",
     question: "Đâu là một hình thức của ý thức xã hội?",
-    options: [
-      "Máy móc sản xuất",
-      "Tôn giáo",
-      "Công cụ lao động",
-      "Nhà máy",
-    ],
+    options: ["Máy móc sản xuất", "Tôn giáo", "Công cụ lao động", "Nhà máy"],
     correctIndex: 1,
   },
   5: {
@@ -67,19 +56,13 @@ const QUESTION_MAP = {
     title: "Câu 5",
     question:
       "Trong xã hội, giai cấp nào đại diện cho lực lượng sản xuất tiên tiến dưới chủ nghĩa tư bản?",
-    options: [
-      "Địa chủ",
-      "Nông dân",
-      "Tư sản",
-      "Vô sản",
-    ],
+    options: ["Địa chủ", "Nông dân", "Tư sản", "Vô sản"],
     correctIndex: 3,
   },
   6: {
     type: "mcq",
     title: "Câu 6",
-    question:
-      "Theo triết học Mác – Lênin, thực tiễn là:",
+    question: "Theo triết học Mác – Lênin, thực tiễn là:",
     options: [
       "Toàn bộ hoạt động vật chất có mục đích của con người",
       "Hoạt động tinh thần của xã hội",
@@ -91,8 +74,7 @@ const QUESTION_MAP = {
   7: {
     type: "mcq",
     title: "Câu 7",
-    question:
-      "Nội dung nào phản ánh đúng mối quan hệ giữa vật chất và ý thức?",
+    question: "Nội dung nào phản ánh đúng mối quan hệ giữa vật chất và ý thức?",
     options: [
       "Ý thức quyết định hoàn toàn vật chất",
       "Vật chất quyết định ý thức",
@@ -212,7 +194,12 @@ export default function LotoShow() {
   const currentQuestion = openedNumber ? QUESTION_MAP[openedNumber] : null;
 
   const openQuestion = (number, cellIndex) => {
-    if (isGameOver || feedback || usedCells.has(cellIndex) || openedCell !== null)
+    if (
+      isGameOver ||
+      feedback ||
+      usedCells.has(cellIndex) ||
+      openedCell !== null
+    )
       return;
 
     setOpenedCell(cellIndex);
@@ -391,9 +378,7 @@ export default function LotoShow() {
                 </button>
               </div>
 
-              <p className="loto-hint">
-                Bấm vào số bất kỳ để trả lời câu hỏi.
-              </p>
+              <p className="loto-hint">Bấm vào số bất kỳ để trả lời câu hỏi.</p>
             </div>
 
             <div className="loto-qa-panel">
@@ -416,8 +401,12 @@ export default function LotoShow() {
                     <div className="loto-options">
                       {currentQuestion.options.map((option, idx) => {
                         const isPicked = selectedOption === idx;
-                        const isCorrect = feedback && feedback.isCorrect && idx === currentQuestion.correctIndex;
-                        const isWrong = feedback && !feedback.isCorrect && isPicked;
+                        const isCorrect =
+                          feedback &&
+                          feedback.isCorrect &&
+                          idx === currentQuestion.correctIndex;
+                        const isWrong =
+                          feedback && !feedback.isCorrect && isPicked;
 
                         let optionClass = "loto-option";
                         if (isPicked) optionClass += " picked";
