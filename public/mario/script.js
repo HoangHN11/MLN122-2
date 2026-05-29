@@ -138,137 +138,137 @@ const oldRooms = [
 
 const rooms = [
   {
-    title: "Phòng 1",
+    title: "Phòng 1: Giai cấp và tư liệu sản xuất",
     questions: [
       {
-        text: "Chủ nghĩa Mác - Lênin do ai sáng lập?",
+        text: "Tiêu chí quan trọng nhất để phân biệt giai cấp là:",
         answers: [
-          "Khổng Tử và Mạnh Tử",
-          "Các Mác và Ph. Ăngghen",
-          "Lênin và Xtalin",
-          "Hồ Chí Minh và Lênin"
+          "Mức thu nhập cá nhân",
+          "Quan hệ với tư liệu sản xuất",
+          "Trình độ học vấn",
+          "Nguồn gốc gia đình"
         ],
         correct: 1,
-        explain: "Chủ nghĩa Mác - Lênin bắt nguồn từ học thuyết của Các Mác và Ph. Ăngghen, sau đó được Lênin phát triển."
+        explain: "Tiêu chí quan trọng nhất là quan hệ của các nhóm người với tư liệu sản xuất."
       },
       {
-        text: "Theo triết học Mác - Lênin, vật chất có trước hay ý thức có trước?",
+        text: "Nguyên nhân cơ bản của đấu tranh giai cấp là:",
         answers: [
-          "Ý thức có trước",
-          "Vật chất có trước",
-          "Cả hai xuất hiện cùng lúc",
-          "Không cái nào có trước"
+          "Khác biệt văn hóa",
+          "Bất đồng ngôn ngữ",
+          "Mâu thuẫn lợi ích kinh tế",
+          "Chênh lệch tuổi tác"
         ],
-        correct: 1,
-        explain: "Theo chủ nghĩa duy vật, vật chất có trước và ý thức là sự phản ánh của thế giới vật chất."
+        correct: 2,
+        explain: "Đấu tranh giai cấp bắt nguồn từ mâu thuẫn lợi ích kinh tế giữa các giai cấp."
       }
     ]
   },
   {
-    title: "Phòng 2",
+    title: "Phòng 2: Giai cấp vô sản và đấu tranh giai cấp",
     questions: [
       {
-        text: "Quy luật nào nói về sự thay đổi từ lượng thành chất?",
+        text: "Trong xã hội tư bản, giai cấp vô sản chủ yếu là:",
         answers: [
-          "Quy luật phủ định của phủ định",
-          "Quy luật thống nhất và đấu tranh của các mặt đối lập",
-          "Quy luật lượng - chất",
-          "Quy luật mâu thuẫn xã hội"
-        ],
-        correct: 2,
-        explain: "Quy luật lượng - chất chỉ ra sự tích lũy về lượng đến một điểm nhất định sẽ dẫn tới biến đổi về chất."
-      },
-      {
-        text: "Theo chủ nghĩa duy vật biện chứng, nguồn gốc của sự phát triển là gì?",
-        answers: [
-          "Ý muốn con người",
-          "Thần linh",
-          "Mâu thuẫn",
-          "Tự nhiên ngẫu nhiên"
-        ],
-        correct: 2,
-        explain: "Chủ nghĩa duy vật biện chứng xem mâu thuẫn bên trong sự vật là nguồn gốc của sự vận động và phát triển."
-      }
-    ]
-  },
-  {
-    title: "Phòng 3",
-    questions: [
-      {
-        text: "Hình thái kinh tế - xã hội cao nhất theo quan điểm Mác - Lênin là gì?",
-        answers: [
-          "Chiếm hữu nô lệ",
-          "Phong kiến",
-          "Tư bản chủ nghĩa",
-          "Cộng sản chủ nghĩa"
-        ],
-        correct: 3,
-        explain: "Theo quan điểm Mác - Lênin, cộng sản chủ nghĩa là hình thái kinh tế - xã hội cao nhất."
-      },
-      {
-        text: "Theo triết học Mác - Lênin, “ý thức” là gì?",
-        answers: [
-          "Sự phản ánh thế giới khách quan vào bộ óc con người",
-          "Một dạng vật chất đặc biệt",
-          "Tồn tại độc lập với con người",
-          "Do thần linh tạo ra"
+          "Người làm thuê để kiếm sống",
+          "Người sở hữu doanh nghiệp",
+          "Chủ đất nông nghiệp",
+          "Quan chức nhà nước"
         ],
         correct: 0,
-        explain: "Ý thức là sự phản ánh thế giới khách quan vào bộ óc con người trên cơ sở hoạt động thực tiễn."
-      }
-    ]
-  },
-  {
-    title: "Phòng 4",
-    questions: [
+        explain: "Giai cấp vô sản chủ yếu là những người không sở hữu tư liệu sản xuất, phải làm thuê để sống."
+      },
       {
-        text: "Nội dung nào KHÔNG thuộc phép biện chứng duy vật?",
+        text: "Đấu tranh giai cấp thường xuất hiện khi:",
         answers: [
-          "Mọi sự vật đều vận động và phát triển",
-          "Các sự vật tồn tại cô lập, tách rời nhau",
-          "Sự phát triển do mâu thuẫn bên trong",
-          "Sự vật có mối liên hệ phổ biến"
+          "Dân số tăng nhanh",
+          "Xã hội có đối lập lợi ích",
+          "Công nghệ phát triển",
+          "Nhà nước đổi chính sách"
         ],
         correct: 1,
-        explain: "Phép biện chứng duy vật khẳng định các sự vật có mối liên hệ phổ biến, không tồn tại cô lập tuyệt đối."
-      },
-      {
-        text: "Trong quan hệ giữa cơ sở hạ tầng và kiến trúc thượng tầng, yếu tố nào giữ vai trò quyết định?",
-        answers: [
-          "Nhà nước",
-          "Pháp luật",
-          "Ý thức xã hội",
-          "Cơ sở hạ tầng"
-        ],
-        correct: 3,
-        explain: "Theo duy vật lịch sử, cơ sở hạ tầng giữ vai trò quyết định đối với kiến trúc thượng tầng."
+        explain: "Đấu tranh giai cấp xuất hiện khi trong xã hội có các lợi ích đối lập không dễ điều hòa."
       }
     ]
   },
   {
-    title: "Phòng 5",
+    title: "Phòng 3: Dân tộc và sứ mệnh lịch sử",
     questions: [
       {
-        text: "“Phủ định của phủ định” phản ánh điều gì?",
+        text: "Đặc điểm nào thuộc về dân tộc?",
         answers: [
-          "Sự lặp lại nguyên vẹn cái cũ",
-          "Sự phát triển theo đường thẳng",
-          "Sự phát triển theo đường xoáy ốc",
-          "Sự phát triển ngẫu nhiên"
+          "Chung một nghề nghiệp",
+          "Cùng mức thu nhập",
+          "Có chung đời sống kinh tế",
+          "Cùng địa vị xã hội"
         ],
         correct: 2,
-        explain: "Quy luật phủ định của phủ định phản ánh khuynh hướng phát triển theo đường xoáy ốc."
+        explain: "Một đặc điểm cơ bản của dân tộc là có chung đời sống kinh tế."
       },
       {
-        text: "Theo quan điểm duy vật lịch sử, lực lượng sản xuất gồm những yếu tố nào?",
+        text: "Giai cấp vô sản có sứ mệnh lịch sử vì:",
         answers: [
-          "Người lao động và tư liệu sản xuất",
-          "Nhà nước và pháp luật",
-          "Giai cấp và dân tộc",
-          "Tôn giáo và văn hóa"
+          "Có nhiều tài sản xã hội",
+          "Được nhà nước trao quyền",
+          "Có số lượng đông nhất",
+          "Đại diện lực lượng sản xuất tiên tiến"
+        ],
+        correct: 3,
+        explain: "Giai cấp vô sản có sứ mệnh lịch sử vì đại diện cho lực lượng sản xuất tiên tiến."
+      }
+    ]
+  },
+  {
+    title: "Phòng 4: Hình thức đấu tranh và bản chất giai cấp",
+    questions: [
+      {
+        text: "Đấu tranh giai cấp diễn ra chủ yếu trên:",
+        answers: [
+          "Kinh tế, chính trị và tư tưởng",
+          "Văn hóa, nghệ thuật và giáo dục",
+          "Tôn giáo, gia đình và đạo đức",
+          "Khoa học, kỹ thuật và y tế"
         ],
         correct: 0,
-        explain: "Lực lượng sản xuất gồm người lao động và tư liệu sản xuất, trong đó người lao động giữ vai trò quan trọng."
+        explain: "Đấu tranh giai cấp diễn ra chủ yếu trên các lĩnh vực kinh tế, chính trị và tư tưởng."
+      },
+      {
+        text: "Nhận định nào đúng về giai cấp?",
+        answers: [
+          "Giai cấp tồn tại trong mọi xã hội",
+          "Giai cấp chỉ do văn hóa tạo ra",
+          "Giai cấp gắn với điều kiện kinh tế",
+          "Giai cấp không liên quan sản xuất"
+        ],
+        correct: 2,
+        explain: "Giai cấp gắn với điều kiện kinh tế và quan hệ sản xuất của xã hội."
+      }
+    ]
+  },
+  {
+    title: "Phòng 5: Đặc trưng cơ bản của dân tộc",
+    questions: [
+      {
+        text: "Nhận định nào đúng về dân tộc?",
+        answers: [
+          "Dân tộc chỉ dựa vào huyết thống",
+          "Dân tộc hình thành trong lịch sử",
+          "Dân tộc chỉ là nhóm nghề nghiệp",
+          "Dân tộc không cần lãnh thổ chung"
+        ],
+        correct: 1,
+        explain: "Dân tộc là cộng đồng người hình thành trong quá trình lịch sử."
+      },
+      {
+        text: "Yếu tố nào không phải đặc trưng cơ bản của dân tộc?",
+        answers: [
+          "Lãnh thổ chung",
+          "Ngôn ngữ chung",
+          "Đời sống kinh tế chung",
+          "Thu nhập ngang nhau"
+        ],
+        correct: 3,
+        explain: "Thu nhập ngang nhau không phải là đặc trưng cơ bản của dân tộc."
       }
     ]
   }

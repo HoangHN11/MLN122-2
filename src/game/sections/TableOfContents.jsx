@@ -32,6 +32,10 @@ const TOC_ITEMS = [
     label: "Lô Tô",
   },
   {
+    id: "mario",
+    label: "Mario",
+  },
+  {
     id: "ai",
     label: "AI Usage",
   },
