@@ -10,7 +10,7 @@ const TOC_ITEMS = [
     children: [
       { id: "ton-tai", label: "Khái niệm và nguồn gốc" },
       { id: "tat-yeu", label: "Kết cấu xã hội - giai cấp" },
-      { id: "mind-map-5-1-2", label: "Mind map" },
+      { id: "mind-map-5-1-2", label: "Khái niệm và nguồn gốc giai cấp" },
       { id: "dau-tranh-giai-cap", label: "Khái niệm và tính tất yếu" },
       { id: "dau-tranh-giai-cap-2", label: "Tính khách quan" },
       { id: "luc-luong-tham-gia", label: "Lực lượng tham gia" },

@@ -29,7 +29,10 @@ const TOOLS = [
 
 export const AIUsagePage = () => {
   return (
-    <div className="w-full min-h-screen bg-transparent text-blue-950 pt-32 pb-24 px-6 md:px-12 relative overflow-y-auto flex justify-center">
+    <div className="w-full min-h-screen bg-transparent text-blue-950 pt-32 pb-24 px-6 md:px-12 relative overflow-hidden flex justify-center">
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_50%_10%,rgba(255,255,255,0.72),rgba(255,255,255,0.18)_34%,rgba(37,99,235,0.18)_64%,transparent_100%)]" />
+      <div className="absolute inset-x-0 top-0 h-56 pointer-events-none bg-gradient-to-b from-white/50 to-transparent" />
+      <div className="absolute left-1/2 top-24 h-[760px] w-[min(1180px,88vw)] -translate-x-1/2 rounded-[36px] border border-white/45 bg-white/18 shadow-[0_28px_90px_rgba(15,45,105,0.28)] backdrop-blur-[2px] pointer-events-none" />
       <div className="max-w-[1000px] w-full relative z-10">
         
         {/* Part 3: Tool Breakdown */}
@@ -41,7 +44,7 @@ export const AIUsagePage = () => {
 
           <div className="space-y-6">
             {TOOLS.map((tool, idx) => (
-              <div key={idx} className="bg-white/78 backdrop-blur-md border border-blue-100/80 rounded-[16px] p-6 shadow-[0_16px_42px_rgba(21,52,96,0.14)] transition-all duration-300">
+              <div key={idx} className="bg-white/88 backdrop-blur-md border border-white/80 rounded-[16px] p-6 shadow-[0_18px_48px_rgba(21,52,96,0.22)] ring-1 ring-blue-900/5 transition-all duration-300">
                 <div className="flex flex-col md:flex-row gap-6">
                   {/* Icon & Name */}
                   <div className="md:w-1/4 flex flex-col items-center md:items-start text-center md:text-left md:border-r border-blue-200/80 pr-4">
