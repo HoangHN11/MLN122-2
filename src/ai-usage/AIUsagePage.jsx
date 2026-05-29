@@ -39,7 +39,7 @@ export const AIUsagePage = () => {
         {/* Part 3: Tool Breakdown */}
         <section className="pt-8">
           <div className="flex flex-col items-center gap-1 mb-10 text-center">
-            <h1 className="font-['Playfair_Display'] text-4xl md:text-5xl font-medium tracking-wide mb-12">Bảng Phân Định Công Cụ AI</h1>
+            <h1 className="font-['Montserrat'] text-4xl md:text-5xl font-medium tracking-wide mb-12">Bảng Phân Định Công Cụ AI</h1>
             <div className="w-24 h-[1px] bg-[#c9922a] mx-auto opacity-40 mb-6"></div>
           </div>
 
@@ -52,10 +52,10 @@ export const AIUsagePage = () => {
                     <div className="text-[#c9922a] bg-[rgba(201,146,42,0.1)] p-3 rounded-full mb-3 inline-block border border-[rgba(201,146,42,0.2)]">
                       {tool.icon}
                     </div>
-                    <h3 className="font-['Playfair_Display'] text-xl text-[#ede6d6] tracking-wide">{tool.name}</h3>
+                    <h3 className="font-['Montserrat'] text-xl text-[#ede6d6] tracking-wide">{tool.name}</h3>
                   </div>
                   {/* Details */}
-                  <div className="md:w-3/4 flex flex-col sm:flex-row gap-6 font-['Outfit'] font-light">
+                  <div className="md:w-3/4 flex flex-col sm:flex-row gap-6 font-['Montserrat'] font-light">
                     <div className="sm:w-1/2 bg-[rgba(0,0,0,0.2)] rounded-[12px] p-5 border border-[rgba(255,255,255,0.02)]">
                       <span className="text-[#7a6040] text-[10px] uppercase tracking-widest font-medium block mb-3">Vai trò của AI (Input thô)</span>
                       <p className="text-[#a39481] text-sm leading-relaxed">{tool.purpose}</p>
