@@ -325,9 +325,7 @@ const resetRankButton = document.getElementById("resetRankButton");
 const homeRankBody = document.getElementById("homeRankBody");
 const endRankPanel = document.getElementById("endRankPanel");
 const endRankBody = document.getElementById("endRankBody");
-const LEADERBOARD_KEY = "marioPrincessLeaderboard";
 const LEADERBOARD_API = "/api/leaderboard";
-const LOCAL_ADMIN_RESET_CODE = "admin";
 let gameStarted = false;
 let currentPlayer = "";
 let runStartTime = 0;
@@ -473,19 +471,6 @@ function stopRunTimer() {
   updateRunTimer();
 }
 
-function getLeaderboard() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(LEADERBOARD_KEY));
-    return Array.isArray(saved) ? saved : [];
-  } catch {
-    return [];
-  }
-}
-
-function saveLeaderboard(rows) {
-  localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(rows));
-}
-
 async function fetchOnlineLeaderboard() {
   const response = await fetch(LEADERBOARD_API);
 
@@ -547,29 +532,38 @@ async function resetLeaderboardByAdmin() {
 
   try {
     await resetOnlineLeaderboard(adminCode);
-    localStorage.removeItem(LEADERBOARD_KEY);
     renderLeaderboard([]);
     window.alert("Đã reset bảng xếp hạng online. Phiên mới có thể bắt đầu.");
   } catch (error) {
-    if (error.status === 403 || adminCode !== LOCAL_ADMIN_RESET_CODE) {
+    if (error.status === 403) {
       window.alert("Sai mã admin. Bảng xếp hạng chưa bị xóa.");
       return;
     }
 
-    localStorage.removeItem(LEADERBOARD_KEY);
-    renderLeaderboard([]);
-    window.alert("Đã reset bảng trên máy này. Nếu đã deploy Vercel, hãy kiểm tra lại cấu hình Redis online.");
+    renderRankStatus("Không kết nối được bảng rank chung.");
+    window.alert("Không thể reset bảng rank chung. Hãy kiểm tra server đang chạy.");
   }
 }
 
 function createEmptyRankRow(body) {
+  createRankStatusRow(body, "Chưa có lượt chơi nào.");
+}
+
+function createRankStatusRow(body, text) {
   const row = document.createElement("tr");
   const cell = document.createElement("td");
   cell.colSpan = 3;
   cell.className = "empty-rank";
-  cell.textContent = "Chưa có lượt chơi nào.";
+  cell.textContent = text;
   row.appendChild(cell);
   body.appendChild(row);
+}
+
+function renderRankStatus(text) {
+  homeRankBody.innerHTML = "";
+  endRankBody.innerHTML = "";
+  createRankStatusRow(homeRankBody, text);
+  createRankStatusRow(endRankBody, text);
 }
 
 function fillRankTable(body, rows) {
@@ -602,7 +596,7 @@ function getSortedLeaderboardRows(rows) {
     .slice(0, 10);
 }
 
-function renderLeaderboard(rows = getLeaderboard()) {
+function renderLeaderboard(rows = []) {
   const sortedRows = getSortedLeaderboardRows(rows);
 
   fillRankTable(homeRankBody, sortedRows);
@@ -612,10 +606,9 @@ function renderLeaderboard(rows = getLeaderboard()) {
 async function syncLeaderboard() {
   try {
     const rows = await fetchOnlineLeaderboard();
-    saveLeaderboard(rows);
     renderLeaderboard(rows);
   } catch {
-    renderLeaderboard();
+    renderRankStatus("Không kết nối được bảng rank chung. Nếu đang deploy Vercel, hãy kiểm tra biến môi trường Upstash Redis.");
   }
 }
 
@@ -639,19 +632,14 @@ function saveCurrentScore() {
     time: elapsed,
     finishedAt: new Date().toISOString()
   };
-  const rows = getLeaderboard();
-  rows.push(row);
-  rows.sort((a, b) => a.time - b.time);
-  saveLeaderboard(rows.slice(0, 50));
   scoreSaved = true;
-  renderLeaderboard(rows);
+  renderRankStatus("Đang gửi điểm lên bảng rank chung...");
   submitOnlineScore(row)
     .then(onlineRows => {
-      saveLeaderboard(onlineRows);
       renderLeaderboard(onlineRows);
     })
     .catch(() => {
-      renderLeaderboard(rows);
+      renderRankStatus("Chưa lưu được điểm lên bảng rank chung. Hãy kiểm tra API /api/leaderboard và cấu hình Upstash Redis trên Vercel.");
     });
   endRankPanel.classList.remove("hidden");
   startLeaderboardSync();
