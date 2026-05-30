@@ -319,6 +319,7 @@ const answers = document.getElementById("answers");
 const feedback = document.getElementById("feedback");
 const nextButton = document.getElementById("nextButton");
 const restartButton = document.getElementById("restartButton");
+const homeButton = document.getElementById("homeButton");
 const startButton = document.getElementById("startButton");
 const playerNameInput = document.getElementById("playerNameInput");
 const resetRankButton = document.getElementById("resetRankButton");
@@ -914,6 +915,7 @@ function clearPendingTimers() {
 
 nextButton.addEventListener("click", goNext);
 restartButton.addEventListener("click", resetGame);
+homeButton.addEventListener("click", returnToHome);
 resetRankButton.addEventListener("click", resetLeaderboardByAdmin);
 startButton.addEventListener("click", () => {
   if (gameStarted) return;

@@ -180,6 +180,32 @@ body:not(.home-active) .home-screen {
   text-align: left;
 }
 
+.home-rank table,
+.rank-panel table {
+  display: block;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.home-rank thead,
+.home-rank tbody,
+.home-rank tr,
+.rank-panel thead,
+.rank-panel tbody,
+.rank-panel tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.home-rank thead,
+.rank-panel thead {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #fff;
+}
+
 .home-rank th,
 .home-rank td,
 .rank-panel th,
@@ -2170,12 +2196,25 @@ body.game-finished .rank-panel h3 {
 
 body.game-finished .rank-panel table {
   width: 100%;
+  max-height: min(42vh, 420px);
 }
 
 body.game-finished .rank-panel th,
 body.game-finished .rank-panel td {
   padding: 14px 18px;
   font-size: clamp(1rem, 1.45vw, 1.25rem);
+}
+
+.rank-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px 18px 18px;
+  background: #fff;
+}
+
+body.game-finished .rank-actions .secondary {
+  min-width: 170px;
+  background: var(--gold);
 }
 
 .primary,
@@ -2220,6 +2259,11 @@ body.game-finished .rank-panel td {
   .home-rank td {
     padding: 8px;
     font-size: 0.86rem;
+  }
+
+  .home-rank table,
+  .rank-panel table {
+    max-height: 220px;
   }
 
   .game-shell {
@@ -2276,6 +2320,10 @@ body.game-finished .rank-panel td {
   body.game-finished .rank-panel td {
     padding: 10px;
     font-size: 0.92rem;
+  }
+
+  body.game-finished .rank-panel table {
+    max-height: 38vh;
   }
 
   .stage.in-room .room-status {
