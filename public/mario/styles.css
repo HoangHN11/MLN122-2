@@ -140,10 +140,34 @@ body:not(.home-active) .home-screen {
   outline: none;
 }
 
+.rank-view-button {
+  display: block;
+  width: fit-content;
+  margin: 18px auto 0;
+  border: 4px solid var(--line);
+  border-radius: 10px;
+  padding: 12px 22px;
+  background: var(--gold);
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 900;
+  box-shadow: 0 6px 0 rgba(23, 32, 51, 0.2);
+}
+
+.rank-view-button:hover,
+.rank-view-button:focus-visible {
+  background: #ffd65b;
+  outline: none;
+}
+
 .start-button:disabled,
 .player-field input:disabled {
   cursor: not-allowed;
   opacity: 0.62;
+}
+
+body.home-active:not(.rank-only) .home-rank {
+  display: none;
 }
 
 .home-rank,
@@ -253,7 +277,8 @@ body.rank-only .home-badge,
 body.rank-only .home-card > h1,
 body.rank-only .home-card > p,
 body.rank-only .player-field,
-body.rank-only .start-button {
+body.rank-only .start-button,
+body.rank-only .rank-view-button {
   display: none;
 }
 
