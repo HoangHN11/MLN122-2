@@ -355,6 +355,11 @@ function updateStartLock() {
   startButton.textContent = completed ? "Máy này đã chơi" : "Bắt đầu";
 }
 
+function showHomeRankOnly() {
+  document.body.classList.add("rank-only");
+  syncLeaderboard();
+}
+
 function createRooms() {
   rooms.forEach((_, index) => {
     const room = document.createElement("div");
@@ -891,6 +896,7 @@ function returnToHome() {
   nextButton.classList.add("hidden");
   endRankPanel.classList.add("hidden");
   playerNameInput.value = "";
+  updateStartLock();
   syncLeaderboard();
 }
 
@@ -915,7 +921,10 @@ function clearPendingTimers() {
 
 nextButton.addEventListener("click", goNext);
 restartButton.addEventListener("click", resetGame);
-homeButton.addEventListener("click", returnToHome);
+homeButton.addEventListener("click", () => {
+  returnToHome();
+  showHomeRankOnly();
+});
 resetRankButton.addEventListener("click", resetLeaderboardByAdmin);
 startButton.addEventListener("click", () => {
   if (gameStarted) return;
@@ -931,7 +940,7 @@ startButton.addEventListener("click", () => {
   scoreSaved = false;
   startRunTimer();
   endRankPanel.classList.add("hidden");
-  document.body.classList.remove("home-active");
+  document.body.classList.remove("home-active", "rank-only");
   startRoomEntry(0);
 });
 
