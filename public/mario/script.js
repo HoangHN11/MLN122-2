@@ -326,11 +326,33 @@ const homeRankBody = document.getElementById("homeRankBody");
 const endRankPanel = document.getElementById("endRankPanel");
 const endRankBody = document.getElementById("endRankBody");
 const LEADERBOARD_API = "/api/leaderboard";
+const DEVICE_PLAYED_KEY = "mario_princess_completed_once";
 let gameStarted = false;
 let currentPlayer = "";
 let runStartTime = 0;
 let scoreSaved = false;
 let leaderboardSyncTimer = null;
+
+function hasCompletedOnThisDevice() {
+  return localStorage.getItem(DEVICE_PLAYED_KEY) === "1";
+}
+
+function markCompletedOnThisDevice() {
+  localStorage.setItem(DEVICE_PLAYED_KEY, "1");
+  updateStartLock();
+}
+
+function clearCompletedOnThisDevice() {
+  localStorage.removeItem(DEVICE_PLAYED_KEY);
+  updateStartLock();
+}
+
+function updateStartLock() {
+  const completed = hasCompletedOnThisDevice();
+  startButton.disabled = completed;
+  playerNameInput.disabled = completed;
+  startButton.textContent = completed ? "Máy này đã chơi" : "Bắt đầu";
+}
 
 function createRooms() {
   rooms.forEach((_, index) => {
@@ -532,6 +554,7 @@ async function resetLeaderboardByAdmin() {
 
   try {
     await resetOnlineLeaderboard(adminCode);
+    clearCompletedOnThisDevice();
     renderLeaderboard([]);
     window.alert("Đã reset bảng xếp hạng online. Phiên mới có thể bắt đầu.");
   } catch (error) {
@@ -636,6 +659,7 @@ function saveCurrentScore() {
   renderRankStatus("Đang gửi điểm lên bảng rank chung...");
   submitOnlineScore(row)
     .then(onlineRows => {
+      markCompletedOnThisDevice();
       renderLeaderboard(onlineRows);
     })
     .catch(() => {
@@ -774,7 +798,7 @@ function finishGame() {
   state.locked = true;
   const elapsed = saveCurrentScore();
   document.body.classList.remove("room-entry");
-  document.body.classList.add("room-active");
+  document.body.classList.add("room-active", "game-finished");
   stage.classList.add("in-room", "rescue-room", "castle-ready");
   stage.classList.remove("transitioning", "entering-room");
   setScene(4);
@@ -818,10 +842,7 @@ function finishGame() {
     feedback.textContent = "Nhóm đã vượt qua 5 phòng và hoàn thành nội dung activity.";
   }, 4200);
 
-  state.fireworkTimer = setTimeout(() => {
-    nextButton.textContent = "Người chơi tiếp theo";
-    nextButton.classList.remove("hidden");
-  }, 5200);
+  state.fireworkTimer = null;
 }
 
 function resetGame() {
@@ -841,6 +862,7 @@ function resetGame() {
   state.enteringRoom = false;
   document.body.classList.remove("room-entry");
   document.body.classList.remove("room-active");
+  document.body.classList.remove("game-finished");
   endRankPanel.classList.add("hidden");
   startRoomEntry(0);
 }
@@ -861,7 +883,7 @@ function returnToHome() {
   state.transitioning = false;
   state.enteringRoom = false;
   document.body.classList.add("home-active");
-  document.body.classList.remove("room-entry", "room-active");
+  document.body.classList.remove("room-entry", "room-active", "game-finished");
   stage.classList.remove("in-room", "entering-room", "transitioning", "rescue-room", "castle-ready", "gift-scene", "carry-scene", "castle-walk", "firework-scene");
   mario.classList.remove("walking", "entering");
   princess.classList.remove("saved");
@@ -895,6 +917,11 @@ restartButton.addEventListener("click", resetGame);
 resetRankButton.addEventListener("click", resetLeaderboardByAdmin);
 startButton.addEventListener("click", () => {
   if (gameStarted) return;
+  if (hasCompletedOnThisDevice()) {
+    window.alert("Máy này đã hoàn thành game một lần. Hãy dùng máy khác hoặc nhờ admin reset nếu cần chơi lại.");
+    syncLeaderboard();
+    return;
+  }
   stopLeaderboardSync();
   gameStarted = true;
   currentPlayer = playerNameInput.value.trim() || "Người chơi";
@@ -907,5 +934,6 @@ startButton.addEventListener("click", () => {
 });
 
 createRooms();
+updateStartLock();
 syncLeaderboard();
 startLeaderboardSync();

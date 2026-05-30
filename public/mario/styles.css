@@ -140,6 +140,12 @@ body:not(.home-active) .home-screen {
   outline: none;
 }
 
+.start-button:disabled,
+.player-field input:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
 .home-rank,
 .rank-panel {
   margin-top: 24px;
@@ -2135,6 +2141,43 @@ body.room-active .rank-panel td {
   font-size: 0.9rem;
 }
 
+body.game-finished .quiz-panel {
+  width: min(760px, 50vw);
+  max-height: 82vh;
+  padding: 26px;
+}
+
+body.game-finished .actions {
+  display: none;
+}
+
+body.game-finished .rank-panel {
+  margin-top: 22px;
+  border: 5px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 12px 0 rgba(23, 32, 51, 0.16);
+}
+
+body.game-finished .rank-panel h3 {
+  margin: 0;
+  padding: 18px 22px;
+  background: var(--blue);
+  color: #fff;
+  font-size: clamp(1.35rem, 2.1vw, 2rem);
+}
+
+body.game-finished .rank-panel table {
+  width: 100%;
+}
+
+body.game-finished .rank-panel th,
+body.game-finished .rank-panel td {
+  padding: 14px 18px;
+  font-size: clamp(1rem, 1.45vw, 1.25rem);
+}
+
 .primary,
 .secondary {
   min-width: 128px;
@@ -2218,6 +2261,21 @@ body.room-active .rank-panel td {
     max-height: 40vh;
     transform: none;
     padding: 14px;
+  }
+
+  body.game-finished .quiz-panel {
+    left: 4%;
+    right: 4%;
+    top: 8%;
+    width: auto;
+    max-height: 78vh;
+    padding: 16px;
+  }
+
+  body.game-finished .rank-panel th,
+  body.game-finished .rank-panel td {
+    padding: 10px;
+    font-size: 0.92rem;
   }
 
   .stage.in-room .room-status {
