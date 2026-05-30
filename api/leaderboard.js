@@ -1,4 +1,5 @@
 const LEADERBOARD_KEY = "mario_princess_leaderboard_v2";
+const RESET_VERSION_KEY = "mario_princess_reset_version_v1";
 const MAX_ROWS = 50;
 
 function sendJson(res, status, data) {
@@ -65,10 +66,20 @@ async function readRows() {
   return normalizeRows(rows);
 }
 
+async function readResetVersion() {
+  const version = await redis(["GET", RESET_VERSION_KEY]);
+  return typeof version === "string" && version ? version : "0";
+}
+
+async function sendLeaderboard(res, status) {
+  const [rows, resetVersion] = await Promise.all([readRows(), readResetVersion()]);
+  sendJson(res, status, { rows, resetVersion });
+}
+
 export default async function handler(req, res) {
   try {
     if (req.method === "GET") {
-      sendJson(res, 200, { rows: await readRows() });
+      await sendLeaderboard(res, 200);
       return;
     }
 
@@ -92,7 +103,7 @@ export default async function handler(req, res) {
       });
       await redis(["ZADD", LEADERBOARD_KEY, String(row.time), member]);
       await redis(["ZREMRANGEBYRANK", LEADERBOARD_KEY, String(MAX_ROWS), "-1"]);
-      sendJson(res, 200, { rows: await readRows() });
+      await sendLeaderboard(res, 200);
       return;
     }
 
@@ -106,7 +117,9 @@ export default async function handler(req, res) {
       }
 
       await redis(["DEL", LEADERBOARD_KEY]);
-      sendJson(res, 200, { rows: [] });
+      const resetVersion = new Date().toISOString();
+      await redis(["SET", RESET_VERSION_KEY, resetVersion]);
+      sendJson(res, 200, { rows: [], resetVersion });
       return;
     }
 

@@ -328,6 +328,7 @@ const endRankPanel = document.getElementById("endRankPanel");
 const endRankBody = document.getElementById("endRankBody");
 const LEADERBOARD_API = "/api/leaderboard";
 const DEVICE_PLAYED_KEY = "mario_princess_completed_once";
+let currentResetVersion = "0";
 let gameStarted = false;
 let currentPlayer = "";
 let runStartTime = 0;
@@ -335,11 +336,14 @@ let scoreSaved = false;
 let leaderboardSyncTimer = null;
 
 function hasCompletedOnThisDevice() {
-  return localStorage.getItem(DEVICE_PLAYED_KEY) === "1";
+  const completedVersion = localStorage.getItem(DEVICE_PLAYED_KEY);
+  if (!completedVersion) return false;
+  if (completedVersion === "1") return currentResetVersion === "0";
+  return completedVersion === currentResetVersion;
 }
 
 function markCompletedOnThisDevice() {
-  localStorage.setItem(DEVICE_PLAYED_KEY, "1");
+  localStorage.setItem(DEVICE_PLAYED_KEY, currentResetVersion || "1");
   updateStartLock();
 }
 
@@ -507,6 +511,7 @@ async function fetchOnlineLeaderboard() {
   }
 
   const payload = await response.json();
+  syncResetVersion(payload.resetVersion);
   return Array.isArray(payload.rows) ? payload.rows : [];
 }
 
@@ -524,7 +529,16 @@ async function submitOnlineScore(row) {
   }
 
   const payload = await response.json();
+  syncResetVersion(payload.resetVersion);
   return Array.isArray(payload.rows) ? payload.rows : [];
+}
+
+function syncResetVersion(resetVersion) {
+  if (typeof resetVersion !== "string" || !resetVersion) return;
+  if (resetVersion !== currentResetVersion) {
+    currentResetVersion = resetVersion;
+    updateStartLock();
+  }
 }
 
 async function resetOnlineLeaderboard(code) {
@@ -535,11 +549,16 @@ async function resetOnlineLeaderboard(code) {
     }
   });
 
+  const payload = await response.json().catch(() => ({}));
+
   if (!response.ok) {
     const error = new Error("Cannot reset online leaderboard.");
     error.status = response.status;
     throw error;
   }
+
+  syncResetVersion(payload.resetVersion);
+  return Array.isArray(payload.rows) ? payload.rows : [];
 }
 
 async function resetLeaderboardByAdmin() {
@@ -559,9 +578,9 @@ async function resetLeaderboardByAdmin() {
   if (!confirmed) return;
 
   try {
-    await resetOnlineLeaderboard(adminCode);
+    const rows = await resetOnlineLeaderboard(adminCode);
     clearCompletedOnThisDevice();
-    renderLeaderboard([]);
+    renderLeaderboard(rows);
     window.alert("Đã reset bảng xếp hạng online. Phiên mới có thể bắt đầu.");
   } catch (error) {
     if (error.status === 403) {
@@ -621,8 +640,7 @@ function fillRankTable(body, rows) {
 function getSortedLeaderboardRows(rows) {
   return rows
     .filter(row => row && typeof row.name === "string" && Number.isFinite(row.time))
-    .sort((a, b) => a.time - b.time)
-    .slice(0, 10);
+    .sort((a, b) => a.time - b.time);
 }
 
 function renderLeaderboard(rows = []) {

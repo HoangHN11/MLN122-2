@@ -4,6 +4,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 const LEADERBOARD_FILE = resolve('.leaderboard.local.json')
+const RESET_VERSION_FILE = resolve('.leaderboard-reset.local.txt')
 const MAX_ROWS = 50
 
 function readLeaderboardRows() {
@@ -16,6 +17,18 @@ function readLeaderboardRows() {
 
 function writeLeaderboardRows(rows) {
   writeFileSync(LEADERBOARD_FILE, JSON.stringify(normalizeRows(rows), null, 2))
+}
+
+function readResetVersion() {
+  try {
+    return readFileSync(RESET_VERSION_FILE, 'utf8').trim() || '0'
+  } catch {
+    return '0'
+  }
+}
+
+function writeResetVersion(version) {
+  writeFileSync(RESET_VERSION_FILE, version)
 }
 
 function normalizeRows(rows) {
@@ -62,7 +75,7 @@ function localLeaderboardApi() {
       server.middlewares.use('/api/leaderboard', async (req, res) => {
         try {
           if (req.method === 'GET') {
-            sendJson(res, 200, { rows: readLeaderboardRows() })
+            sendJson(res, 200, { rows: readLeaderboardRows(), resetVersion: readResetVersion() })
             return
           }
 
@@ -81,7 +94,7 @@ function localLeaderboardApi() {
 
             const rows = normalizeRows([...readLeaderboardRows(), row])
             writeLeaderboardRows(rows)
-            sendJson(res, 200, { rows })
+            sendJson(res, 200, { rows, resetVersion: readResetVersion() })
             return
           }
 
@@ -95,7 +108,9 @@ function localLeaderboardApi() {
             }
 
             writeLeaderboardRows([])
-            sendJson(res, 200, { rows: [] })
+            const resetVersion = new Date().toISOString()
+            writeResetVersion(resetVersion)
+            sendJson(res, 200, { rows: [], resetVersion })
             return
           }
 
