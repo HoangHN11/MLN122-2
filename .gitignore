@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
+.leaderboard.local.json
+.leaderboard-reset.local.txt
 
 # Editor directories and files
 .vscode/*

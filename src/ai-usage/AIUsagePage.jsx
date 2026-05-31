@@ -29,43 +29,41 @@ const TOOLS = [
 
 export const AIUsagePage = () => {
   return (
-    <div className="w-full min-h-screen bg-[#0d0705] text-[#ede6d6] pt-32 pb-24 px-6 md:px-12 relative overflow-y-auto flex justify-center">
-      
-      {/* Background Ornaments */}
-      <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-[#1a120d] to-transparent opacity-50 pointer-events-none"></div>
-
+    <div className="w-full min-h-screen bg-[#dce9f8] text-blue-950 pt-32 pb-24 px-6 md:px-12 relative overflow-hidden flex justify-center">
+      <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(180deg,#eef6ff_0%,#dce9f8_42%,#c7daf3_100%)]" />
+      <div className="absolute inset-x-0 top-0 h-56 pointer-events-none bg-[#eef6ff]" />
       <div className="max-w-[1000px] w-full relative z-10">
         
         {/* Part 3: Tool Breakdown */}
         <section className="pt-8">
           <div className="flex flex-col items-center gap-1 mb-10 text-center">
-            <h1 className="font-['Playfair_Display'] text-4xl md:text-5xl font-medium tracking-wide mb-12">Bảng Phân Định Công Cụ AI</h1>
-            <div className="w-24 h-[1px] bg-[#c9922a] mx-auto opacity-40 mb-6"></div>
+            <h1 className="font-['Montserrat'] text-4xl md:text-5xl font-extrabold tracking-wide mb-12 text-blue-950">Bảng Phân Định Công Cụ AI</h1>
+            <div className="w-24 h-[2px] bg-blue-700 mx-auto opacity-50 mb-6"></div>
           </div>
 
           <div className="space-y-6">
             {TOOLS.map((tool, idx) => (
-              <div key={idx} className="bg-[rgba(255,255,255,0.015)] border border-[rgba(255,255,255,0.04)] rounded-[16px] p-6 transition-all duration-300">
+              <div key={idx} className="bg-white/88 backdrop-blur-md border border-white/80 rounded-[16px] p-6 shadow-[0_18px_48px_rgba(21,52,96,0.22)] ring-1 ring-blue-900/5 transition-all duration-300">
                 <div className="flex flex-col md:flex-row gap-6">
                   {/* Icon & Name */}
-                  <div className="md:w-1/4 flex flex-col items-center md:items-start text-center md:text-left md:border-r border-[rgba(255,255,255,0.05)] pr-4">
-                    <div className="text-[#c9922a] bg-[rgba(201,146,42,0.1)] p-3 rounded-full mb-3 inline-block border border-[rgba(201,146,42,0.2)]">
+                  <div className="md:w-1/4 flex flex-col items-center md:items-start text-center md:text-left md:border-r border-blue-200/80 pr-4">
+                    <div className="text-blue-700 bg-blue-50 p-3 rounded-full mb-3 inline-block border border-blue-200">
                       {tool.icon}
                     </div>
-                    <h3 className="font-['Playfair_Display'] text-xl text-[#ede6d6] tracking-wide">{tool.name}</h3>
+                    <h3 className="font-['Montserrat'] text-xl text-blue-950 tracking-wide font-bold">{tool.name}</h3>
                   </div>
                   {/* Details */}
-                  <div className="md:w-3/4 flex flex-col sm:flex-row gap-6 font-['Outfit'] font-light">
-                    <div className="sm:w-1/2 bg-[rgba(0,0,0,0.2)] rounded-[12px] p-5 border border-[rgba(255,255,255,0.02)]">
-                      <span className="text-[#7a6040] text-[10px] uppercase tracking-widest font-medium block mb-3">Vai trò của AI (Input thô)</span>
-                      <p className="text-[#a39481] text-sm leading-relaxed">{tool.purpose}</p>
+                  <div className="md:w-3/4 flex flex-col sm:flex-row gap-6 font-['Montserrat'] font-light">
+                    <div className="sm:w-1/2 bg-white/70 rounded-[12px] p-5 border border-blue-100">
+                      <span className="text-blue-700 text-[10px] uppercase tracking-widest font-bold block mb-3">Vai trò của AI (Input thô)</span>
+                      <p className="text-slate-700 text-sm leading-relaxed">{tool.purpose}</p>
                     </div>
-                    <div className="sm:w-1/2 bg-[rgba(201,146,42,0.05)] rounded-[12px] p-5 border border-[rgba(201,146,42,0.1)]">
-                      <span className="text-[#c9922a] text-[10px] uppercase tracking-widest font-medium block mb-3 flex items-center gap-2">
+                    <div className="sm:w-1/2 bg-blue-50/85 rounded-[12px] p-5 border border-blue-200">
+                      <span className="text-blue-800 text-[10px] uppercase tracking-widest font-bold block mb-3 flex items-center gap-2">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                         Sinh viên xử lý (Hoàn thiện)
                       </span>
-                      <p className="text-[#ede6d6] text-sm leading-relaxed">{tool.human}</p>
+                      <p className="text-blue-950 text-sm leading-relaxed">{tool.human}</p>
                     </div>
                   </div>
                 </div>
