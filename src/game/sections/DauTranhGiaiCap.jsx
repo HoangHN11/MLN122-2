@@ -13,35 +13,11 @@ export default function DauTranhGiaiCap() {
               </div>
             </div>
 
-            <div className="flex-1 px-8 py-10 sm:px-12 sm:py-12 md:px-16 md:py-14">
-              <div className="text-blue-900 font-extrabold leading-[1.05] text-4xl sm:text-5xl md:text-6xl">
+            <div className="flex-1 px-8 py-10 sm:px-12 sm:py-12 md:px-16 md:py-14 flex items-center justify-center">
+              <div className="text-center text-blue-900 font-extrabold leading-[1.02] text-5xl sm:text-6xl md:text-7xl max-w-[880px]">
                 Khái niệm &amp; tính
                 <br />
                 tất yếu
-              </div>
-
-              <div className="mt-10 space-y-7">
-                <div className="w-full max-w-[820px] border border-blue-500 rounded-2xl px-6 py-6 text-blue-900">
-                  <div className="font-bold text-xl sm:text-2xl">Khái niệm</div>
-                  <div className="mt-2 text-base sm:text-lg">
-                    Là cuộc đấu tranh giữa các giai cấp có lợi ích căn bản đối
-                    lập nhau
-                  </div>
-                  <ul className="mt-2 list-disc pl-6 space-y-1 text-base sm:text-lg">
-                    <li>Một bên nắm quyền lực/tư liệu sản xuất</li>
-                    <li>Một bên là lao động bị bóc lột.</li>
-                  </ul>
-                </div>
-
-                <div className="w-full max-w-[820px] border border-blue-500 rounded-2xl px-6 py-6 text-blue-900">
-                  <div className="font-bold text-xl sm:text-2xl">
-                    Tính tất yếu
-                  </div>
-                  <div className="mt-2 text-base sm:text-lg">
-                    Xuất phát từ mâu thuẫn lợi ích cơ bản không thể điều hòa
-                    giữa giai cấp bị trị và giai cấp thống trị.
-                  </div>
-                </div>
               </div>
             </div>
           </div>
