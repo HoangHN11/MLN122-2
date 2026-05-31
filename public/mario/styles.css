@@ -197,6 +197,37 @@ body.home-active:not(.rank-only) .home-rank {
   gap: 12px;
 }
 
+.rank-header-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rank-home-button {
+  display: inline-grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 3px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--blue);
+  box-shadow: 0 4px 0 rgba(23, 32, 51, 0.14);
+  cursor: pointer;
+}
+
+.rank-home-button svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+}
+
+.rank-home-button:hover,
+.rank-home-button:focus-visible {
+  background: #eef6ff;
+  outline: none;
+}
+
 .home-rank table,
 .rank-panel table {
   width: 100%;

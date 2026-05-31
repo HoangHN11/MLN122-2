@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { buildKnowledgePrompt, stripKnowledgePrompt } from "./chatKnowledge";
 
 /* ─── Session helper ─── */
 function getChatSessionId() {
@@ -100,7 +101,13 @@ export default function ChatBot() {
         })
         .then((data) => {
           if (Array.isArray(data) && data.length > 0) {
-            setMessages(data);
+            setMessages(
+              data.map((message) =>
+                message?.messageType === "USER"
+                  ? { ...message, text: stripKnowledgePrompt(message.text) }
+                  : message,
+              ),
+            );
           }
         })
         .catch(() => {
@@ -129,7 +136,7 @@ export default function ChatBot() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          question: text,
+          question: buildKnowledgePrompt(text),
           conversationId: sessionId,
         }),
       });
@@ -180,7 +187,7 @@ export default function ChatBot() {
               </svg>
             </div>
             <div>
-              <div className="cb-header-title">MLN Chatbot</div>
+              <div className="cb-header-title">MLN ChatBot</div>
               <div className="cb-header-status">
                 <span className="cb-status-dot" />
                 Trực tuyến
@@ -221,8 +228,7 @@ export default function ChatBot() {
               <div className="cb-welcome-icon">🤖</div>
               <h4>Xin chào!</h4>
               <p>
-                Tôi là trợ lý AI hỗ trợ môn học MLN111. Bạn có thể hỏi tôi bất kỳ
-                câu hỏi nào về nội dung bài học.
+                Tôi trả lời dựa trên nội dung các slide môn Triết học Mác - Lênin mà bạn đã cung cấp.
               </p>
             </div>
           )}

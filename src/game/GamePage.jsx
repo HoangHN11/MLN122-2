@@ -71,7 +71,7 @@ export const GamePage = () => {
           <div className="mb-6 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="text-sm font-bold uppercase tracking-[0.28em] text-blue-700">
-                EXE101 Mini Game
+                MLN111 Mini Game
               </p>
               <h2 className="text-3xl font-black uppercase text-blue-950 md:text-5xl">
                 Mario giải cứu công chúa

@@ -323,6 +323,7 @@ const homeButton = document.getElementById("homeButton");
 const startButton = document.getElementById("startButton");
 const viewRankButton = document.getElementById("viewRankButton");
 const playerNameInput = document.getElementById("playerNameInput");
+const rankHomeButton = document.getElementById("rankHomeButton");
 const resetRankButton = document.getElementById("resetRankButton");
 const homeRankBody = document.getElementById("homeRankBody");
 const endRankPanel = document.getElementById("endRankPanel");
@@ -945,6 +946,10 @@ homeButton.addEventListener("click", () => {
   showHomeRankOnly();
 });
 viewRankButton.addEventListener("click", showHomeRankOnly);
+rankHomeButton.addEventListener("click", () => {
+  returnToHome();
+  document.body.classList.remove("rank-only");
+});
 resetRankButton.addEventListener("click", resetLeaderboardByAdmin);
 startButton.addEventListener("click", () => {
   if (gameStarted) return;

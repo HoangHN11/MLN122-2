@@ -9,7 +9,7 @@
 <body class="home-active">
   <section class="home-screen" id="homeScreen" aria-label="Trang chủ">
     <div class="home-card">
-      <span class="home-badge">EXE101</span>
+      <span class="home-badge">MLN111</span>
       <h1>Mario giải cứu công chúa</h1>
       <p>Vượt qua 5 căn phòng câu hỏi về chủ nghĩa duy vật lịch sử để giải cứu công chúa.</p>
       <label class="player-field" for="playerNameInput">
@@ -21,7 +21,14 @@
       <section class="home-rank" aria-label="Bảng xếp hạng">
         <h2>
           <span>Bảng xếp hạng</span>
-          <button id="resetRankButton" type="button" class="admin-reset">Admin reset</button>
+          <span class="rank-header-actions">
+            <button id="rankHomeButton" type="button" class="rank-home-button" aria-label="Về trang chủ" title="Về trang chủ">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 10.8 12 3l9 7.8v9.7a1 1 0 0 1-1 1h-5.4v-6.2H9.4v6.2H4a1 1 0 0 1-1-1v-9.7Z"></path>
+              </svg>
+            </button>
+            <button id="resetRankButton" type="button" class="admin-reset">Admin reset</button>
+          </span>
         </h2>
         <table>
           <thead>
@@ -135,7 +142,7 @@
 
     <section class="quiz-panel" aria-label="Câu hỏi">
       <div class="topic-row">
-        <span>EXE101</span>
+        <span>MLN111</span>
         <span>Chủ nghĩa duy vật lịch sử</span>
       </div>
       <h1>Mario giải cứu công chúa</h1>
